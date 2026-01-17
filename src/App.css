@@ -1,38 +1,441 @@
-.App {
-  text-align: center;
+/* ======================
+   GLOBAL RESET
+====================== */
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #EBD5AB; /* overall background */
+  color: #1f2937;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ======================
+   APP LAYOUT
+====================== */
+.layout {
+  display: flex;
+  height: 100vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ======================
+   SIDEBAR (ONLY #0C2C55)
+====================== */
+.sidebar {
+  width: 240px;
+  background: #0C2C55;
+  color: #ffffff;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+/* Sidebar buttons */
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: left;
+  font-size: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.25s ease, padding-left 0.25s ease;
+}
+
+.sidebar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  padding-left: 20px;
+}
+
+/* Active menu item */
+.sidebar button.active {
+  background: #296374;
+  font-weight: 600;
+}
+
+/* Logout */
+.sidebar .logout {
+  margin-top: auto;
+  background: #296374;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.sidebar .logout:hover {
+  background: #629FAD;
+}
+
+/* ======================
+   MAIN CONTENT
+====================== */
+.main {
+  flex: 1;
+  padding: 24px 30px;
+  background: #f2e6ce;
+  overflow-y: auto;
+}
+
+/* ======================
+   TOP BAR
+====================== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.topbar input {
+  width: 260px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+}
+
+/* ======================
+   WELCOME CARD
+====================== */
+.welcome {
+  background: #296374;
+  color: #ffffff;
+  padding: 28px;
+  border-radius: 22px;
+  margin-bottom: 28px;
+}
+
+.welcome h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.welcome p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* ======================
+   STATS CARDS
+====================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 18px;
+  font-size: 20px;
+  font-weight: 700;
+  border-left: 6px solid #629FAD;
+}
+
+.card span {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+/* ======================
+   SUBJECTS
+====================== */
+.subjects {
+  display: flex;
+  gap: 14px;
+}
+
+.subject {
+  background: #629FAD;
+  color: #ffffff;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.subject:hover {
+  transform: translateY(-4px);
+}
+
+/* ======================
+   PANELS (TIME / LEAVE)
+====================== */
+
+
+/* ======================
+   LEAVE TRACKER
+====================== */
+.leave-input {
+  margin-bottom: 20px;
+}
+
+.leave-input label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.leave-input input {
+  width: 90px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+/* ======================
+   DONUT CHART
+====================== */
+.donut {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: 20px 0;
+}
+
+.donut p {
+  margin-top: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ======================
+   CALENDAR WRAPPER
+====================== */
+.calendar-wrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* HEADER */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendar-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.calendar-header button {
+  background: #629fad;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.calendar-header button:hover {
+  background: #296374;
+}
+
+/* GRID */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+/* DAY LABELS */
+.day-label {
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* DAY CELL */
+.day {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #1f2937;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.day:hover {
+  background: #e2e8f0;
+  transform: scale(1.05);
+}
+
+/* LEAVE DAY */
+.day.leave {
+  background: #ef4444;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* ======================
+   LEAVE COUNT
+====================== */
+.leave-count {
+  font-size: 15px;
+  margin-bottom: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ======================
+   MODAL
+====================== */
+.leave-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.leave-modal > div {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 320px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.leave-modal h4 {
+  margin-bottom: 8px;
+}
+
+.leave-modal p {
+  font-size: 14px;
+  margin-bottom: 14px;
+  color: #374151;
+}
+
+.leave-modal input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 14px;
+}
+
+/* MODAL ACTIONS */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-actions button:first-child {
+  background: #629fad;
+  color: white;
+}
+
+.modal-actions button:first-child:hover {
+  background: #296374;
+}
+
+.modal-actions button:last-child {
+  background: #e5e7eb;
+}
+
+
+/* //old  */
+.panel {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 22px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.panel button {
+  background: #296374;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.panel button:hover {
+  background: #629FAD;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.day {
+  background: #f9fafb;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.day.leave {
+  background: #ef4444;
+  color: white;
+}
+
+.leave-modal {
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.leave-modal input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.leave-modal button {
+  margin-right: 10px;
+}
+
+.donut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
 }
