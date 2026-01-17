@@ -14,6 +14,7 @@
   
 //   export default Navbar;
 
+//pages/Sidebar.js
 function Sidebar({ setView, logout }) {
   return (
     <aside className="sidebar">

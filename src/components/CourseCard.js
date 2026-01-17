@@ -1,4 +1,4 @@
-function CourseCard({ title, lessons, completed, image }) {
+function CourseCard({ title, lessons, completed, image, onContinue }) {
     const progress = Math.round((completed / lessons) * 100);
   
     return (
@@ -22,7 +22,12 @@ function CourseCard({ title, lessons, completed, image }) {
             />
           </div>
   
-          <button className="course-btn">Continue</button>
+          <button
+            className="course-btn"
+            onClick={() => onContinue(title)}
+          >
+            Continue
+          </button>
         </div>
       </div>
     );

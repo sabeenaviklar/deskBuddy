@@ -27,44 +27,155 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+📚 Desk Buddy – Student Productivity Dashboard
+📝 Project Overview
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Desk Buddy is a student productivity web application designed to help college students manage their academic life in one place.
+The idea behind this project is to make daily student tasks like tracking study time, managing courses, planning tasks, and monitoring leaves simple and visually engaging.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This project was built as a frontend-focused React application, to keep things simple and easy to understand.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+✨ Features
+🔐 Authentication
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Sign Up and Login functionality
 
-## Learn More
+User data stored securely using localStorage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+📊 Dashboard
 
-### Code Splitting
+Welcome card with student name
+Clean and minimal UI for easy navigation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+📘 Courses Section
 
-### Analyzing the Bundle Size
+Courses displayed as modern cards
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Each card shows:
 
-### Making a Progressive Web App
+Course image
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Lessons completed vs total lessons
 
-### Advanced Configuration
+Progress bar
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Continue button to track course progress
 
-### Deployment
+⏱ Time Tracker
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Start, Stop, and Reset functionality
 
-### `npm run build` fails to minify
+Time displayed in hours : minutes : seconds
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Designed to help students track focused study sessions
+
+🧙‍♂️ Harry Potter Themed To-Do Board
+
+Task board inspired by a magical (Harry Potter–style) theme
+
+Tasks are grouped into:
+
+To Do
+
+In Progress
+
+Done
+
+Features:
+
+Add tasks
+
+Move tasks between columns
+
+Delete tasks
+
+Tasks persist using localStorage
+
+📅 Leave Tracker
+
+Monthly calendar with selectable year and month
+
+Click on any date to mark leave with a reason
+
+Tracks:
+
+Total working days (user input)
+
+Leaves taken
+
+Leave percentage (visual donut chart)
+
+Calendar highlights leave days clearly
+
+🎨 UI & Theme
+
+Sidebar color: #0C2C55
+
+Dashboard accent colors: #296374, #629FAD
+
+Background color: #EBD5AB
+
+Responsive and clean design suitable for student use
+
+🛠 Tech Stack
+
+React.js
+
+JavaScript 
+
+CSS
+
+LocalStorage for data persistence
+
+▶️ How to Run the Project
+
+Clone the repository
+
+git clone <repository-link>
+
+
+Install dependencies
+
+npm install
+
+
+Start the development server
+
+npm start
+
+
+Open your browser and go to
+
+http://localhost:3000
+
+🎯 Learning Outcomes
+
+Through this project, I learned:
+
+React component structure and state management
+
+Conditional rendering and navigation without routing
+
+Using localStorage for persistent data
+
+Building reusable UI components
+
+Designing user-friendly dashboards
+
+Improving UI/UX through consistent theming
+
+🚀 Future Improvements
+
+Backend integration (authentication & database)
+
+User-specific data storage
+
+Notifications and reminders
+
+Course-wise analytics
+
+
+👩‍🎓 Author:
+Desk Buddy was created by kirti and Sabeena as a student project to practice React, UI design, and frontend logic while solving a real-world student productivity problem.

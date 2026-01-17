@@ -1,3 +1,4 @@
+//pages/Signup.js
 import signImg from "./login.png"; 
 
 function Signup({ setPage }) {

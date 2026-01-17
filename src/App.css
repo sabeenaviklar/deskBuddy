@@ -5,6 +5,181 @@
   box-sizing: border-box;
 }
 
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #0b0f19;
+}
+
+
+
+/* ======================
+   MAIN LAYOUT
+====================== */
+.auth-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+/* ======================
+   LEFT PANEL (LOGIN / SIGNUP)
+====================== */
+.auth-left {
+  width: 40%;
+  background: #0b0f19;
+  color: white;
+  padding: 80px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-left h2 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 40px;
+}
+
+.auth-left input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #374151;
+  padding: 12px 6px;
+  margin-bottom: 30px;
+  color: white;
+  font-size: 15px;
+}
+
+.auth-left input::placeholder {
+  color: #6b7280;
+}
+
+.forgot {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+/* ======================
+   PRIMARY BUTTON (SOLID)
+====================== */
+.primary-btn {
+  background: #629FAD; /* ⭐ MAIN COLOR */
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.primary-btn:hover {
+  background: #5DD3B6;
+  transform: translateY(-1px);
+}
+
+/* ======================
+   SWITCH ROW
+====================== */
+.switch-row {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* SECONDARY BUTTON */
+.switch-btn {
+  background: #1f2937;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.switch-btn:hover {
+  background: #374151;
+}
+
+/* ======================
+   RIGHT PANEL (SOLID)
+====================== */
+.auth-right {
+  width: 60%;
+  background: #0C2C55; /* ⭐ MAIN COLOR */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* INNER CARD */
+.welcome-card {
+  width: 85%;
+  height: 85%;
+  background: #0C2C55; /* slightly lighter shade */
+  border-radius: 28px;
+  padding: 60px;
+  color: white;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* TEXT */
+.welcome-text {
+  max-width: 420px;
+}
+
+.welcome-text h1 {
+  font-size: 48px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.welcome-text span {
+  font-weight: 300;
+}
+
+.welcome-text p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* IMAGE */
+.welcome-img {
+  position: absolute;
+  right: 40px;
+  bottom: 30px;
+  width: 420px;
+  max-width: 60%;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 900px) {
+  .auth-right {
+    display: none;
+  }
+
+  .auth-left {
+    width: 100%;
+  }
+}
+
+
+
 body {
   margin: 0;
   font-family: "Inter", "Segoe UI", sans-serif;
