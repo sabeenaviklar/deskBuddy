@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -8,7 +7,7 @@ import TodoBoard from "./TodoBoard";
 import CourseCard from "../components/CourseCard";
 import CourseProgress from "../components/CourseProgress";
 
-function Dashboard({ setUser }) {
+function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
   const [activeCourse, setActiveCourse] = useState(null);
 
@@ -32,9 +31,14 @@ function Dashboard({ setUser }) {
       />
 
       <main className="main">
-        <Topbar user={user} />
+        {/* ✅ Pass darkMode props to Topbar */}
+        <Topbar
+          user={user}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
 
-        {/* COURSE PROGRESS PAGE */}
+        {/* ================= COURSE PROGRESS PAGE ================= */}
         {activeCourse && (
           <CourseProgress
             course={activeCourse}
@@ -42,7 +46,7 @@ function Dashboard({ setUser }) {
           />
         )}
 
-        {/* DASHBOARD HOME */}
+        {/* ================= DASHBOARD HOME ================= */}
         {!activeCourse && view === "dashboard" && (
           <>
             <div className="welcome">
@@ -51,9 +55,20 @@ function Dashboard({ setUser }) {
             </div>
 
             <div className="cards">
-              <div className="card"><h2>07h</h2><span>Study</span></div>
-              <div className="card"><h2>75%</h2><span>Progress</span></div>
-              <div className="card"><h2>10 / 15</h2><span>Mocks</span></div>
+              <div className="card">
+                <h2>07h</h2>
+                <span>Study</span>
+              </div>
+
+              <div className="card">
+                <h2>75%</h2>
+                <span>Progress</span>
+              </div>
+
+              <div className="card">
+                <h2>10 / 15</h2>
+                <span>Mocks</span>
+              </div>
             </div>
 
             <h2>My Courses</h2>
@@ -94,9 +109,10 @@ function Dashboard({ setUser }) {
           </>
         )}
 
-        {view === "time" && <TimeTracker />}
-        {view === "todo" && <TodoBoard />}
-        {view === "leave" && <LeaveTracker />}
+        {/* ================= OTHER VIEWS ================= */}
+        {!activeCourse && view === "time" && <TimeTracker />}
+        {!activeCourse && view === "todo" && <TodoBoard />}
+        {!activeCourse && view === "leave" && <LeaveTracker />}
       </main>
     </div>
   );

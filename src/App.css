@@ -1,16 +1,179 @@
 /* ======================
-   GLOBAL RESET
+   THEME VARIABLES
 ====================== */
+
+:root {
+  --bg-main: #EBD5AB;
+  --bg-content: #f2e6ce;
+  --bg-card: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+
+  --primary: #296374;
+  --primary-light: #629FAD;
+  --sidebar-bg: #0C2C55;
+}
+
+body.dark {
+  --bg-main: #0b0f19;
+  --bg-content: #111827;
+  --bg-card: #1f2937;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+
+  --primary: #629FAD;
+  --primary-light: #5DD3B6;
+  --sidebar-bg: #0C2C55;
+}
+
+/* ======================
+   GLOBAL
+====================== */
+
 * {
   box-sizing: border-box;
 }
 
-
 body {
   margin: 0;
   font-family: "Inter", "Segoe UI", sans-serif;
-  background: #0b0f19;
+  background: var(--bg-main);
+  color: var(--text-main);
+  transition: all 0.3s ease;
 }
+
+/* ======================
+   LAYOUT
+====================== */
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: var(--sidebar-bg);
+  color: white;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: left;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.sidebar button.active {
+  background: var(--primary);
+}
+
+.sidebar .logout {
+  margin-top: auto;
+  background: var(--primary);
+  border-radius: 12px;
+}
+
+.main {
+  flex: 1;
+  padding: 24px 30px;
+  background: var(--bg-content);
+  overflow-y: auto;
+}
+
+/* ======================
+   TOPBAR
+====================== */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.topbar input {
+  width: 260px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+}
+
+.theme-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.theme-toggle:hover {
+  background: var(--primary-light);
+}
+
+/* ======================
+   CARDS
+====================== */
+
+.card,
+.panel,
+.course-card,
+.hp-column,
+.calendar-wrapper {
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 20px;
+  transition: 0.3s ease;
+}
+
+.card span,
+.course-lessons,
+.day-label {
+  color: var(--text-muted);
+}
+
+/* ======================
+   BUTTONS
+====================== */
+
+.primary-btn,
+.course-btn,
+.add-task button,
+.panel button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn:hover,
+.course-btn:hover,
+.panel button:hover {
+  background: var(--primary-light);
+}
+
+
+
+
+
 
 
 
@@ -180,12 +343,6 @@ body {
 
 
 
-body {
-  margin: 0;
-  font-family: "Inter", "Segoe UI", sans-serif;
-  background: #EBD5AB; /* overall background */
-  color: #1f2937;
-}
 
 /* ======================
    APP LAYOUT
@@ -195,75 +352,8 @@ body {
   height: 100vh;
 }
 
-/* ======================
-   SIDEBAR (ONLY #0C2C55)
-====================== */
-.sidebar {
-  width: 240px;
-  background: #0C2C55;
-  color: #ffffff;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
-}
 
-.sidebar h2 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  color: #ffffff;
-}
 
-/* Sidebar buttons */
-.sidebar button {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  text-align: left;
-  font-size: 15px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.25s ease, padding-left 0.25s ease;
-}
-
-.sidebar button:hover {
-  background: rgba(255, 255, 255, 0.15);
-  padding-left: 20px;
-}
-
-/* Active menu item */
-.sidebar button.active {
-  background: #296374;
-  font-weight: 600;
-}
-
-/* Logout */
-.sidebar .logout {
-  margin-top: auto;
-  background: #296374;
-  color: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-.sidebar .logout:hover {
-  background: #629FAD;
-}
-
-/* ======================
-   MAIN CONTENT
-====================== */
-.main {
-  flex: 1;
-  padding: 24px 30px;
-  background: #f2e6ce;
-  overflow-y: auto;
-}
 
 /* ======================
    TOP BAR
@@ -431,12 +521,6 @@ body {
   background: #296374;
 }
 
-/* GRID */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-}
 
 /* DAY LABELS */
 .day-label {
@@ -463,11 +547,6 @@ body {
   transform: scale(1.05);
 }
 
-/* LEAVE DAY */
-.day.leave {
-  background: #ef4444;
-  color: white;
-}
 
 /* ======================
    LEAVE COUNT
@@ -489,13 +568,7 @@ body {
   z-index: 50;
 }
 
-.leave-modal > div {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  width: 320px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-}
+
 
 .leave-modal h4 {
   margin-bottom: 8px;
@@ -539,9 +612,6 @@ body {
   background: #296374;
 }
 
-.modal-actions button:last-child {
-  background: #e5e7eb;
-}
 
 
 /* //old  */
@@ -675,7 +745,6 @@ body {
 }
 
 .hp-card {
-  background: #f8fafc;
   padding: 14px;
   border-radius: 12px;
   margin-bottom: 12px;
@@ -866,7 +935,6 @@ body {
 
 .danger {
   background: #ef4444;
-  color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
@@ -879,3 +947,49 @@ body {
 }
 
 
+/* =====================================================
+   DARK MODE SAFE OVERRIDES (DO NOT DELETE ANYTHING ABOVE)
+===================================================== */
+
+body.dark .card,
+body.dark .panel,
+body.dark .course-card,
+body.dark .hp-column,
+body.dark .calendar-wrapper,
+body.dark .progress-table {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+
+body.dark .main {
+  background: var(--bg-content) !important;
+}
+
+body.dark .topbar input {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+
+body.dark .course-lessons,
+body.dark .day-label,
+body.dark .card span,
+body.dark .donut p {
+  color: var(--text-muted) !important;
+}
+
+body.dark .progress-table th {
+  background: var(--bg-content) !important;
+}
+
+body.dark .progress-table tr:hover {
+  background: rgba(255,255,255,0.05) !important;
+}
+
+body.dark .day {
+  background: #1f2937 !important;
+  color: var(--text-main) !important;
+}
+
+body.dark .day:hover {
+  background: #374151 !important;
+}
