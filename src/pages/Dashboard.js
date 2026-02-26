@@ -9,9 +9,22 @@ import CourseProgress from "../components/CourseProgress";
 
 function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
+  const [, forceUpdate] = useState(0);
   const [activeCourse, setActiveCourse] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const getCourseProgress = (courseName, totalLessons) => {
+    const data = JSON.parse(
+      localStorage.getItem(`course_${courseName}_summary`)
+    );
+
+    return {
+      completed: data?.completedLessons || 0,
+      lessons: data?.totalLessons || totalLessons,
+      progress: data?.progress || 0
+    };
+  };
 
   const openCourse = (course) => {
     setActiveCourse(course);
@@ -42,7 +55,10 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
         {activeCourse && (
           <CourseProgress
             course={activeCourse}
-            goBack={() => setActiveCourse(null)}
+            goBack={() => {
+              setActiveCourse(null);
+              forceUpdate(n => n + 1);
+            }}
           />
         )}
 
@@ -76,32 +92,28 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
             <div className="courses-grid">
               <CourseCard
                 title="Mathematics"
-                lessons={20}
-                completed={8}
+                {...getCourseProgress("Mathematics", 20)}
                 image="https://images.unsplash.com/photo-1509228468518-180dd4864904"
                 onContinue={openCourse}
               />
 
               <CourseCard
                 title="Physics"
-                lessons={18}
-                completed={12}
+                {...getCourseProgress("Physics", 18)}
                 image="https://t3.ftcdn.net/jpg/01/97/49/40/360_F_197494079_U9dM6IxEBzdUmrhe3DFxyi8L0aFGtQME.jpg"
                 onContinue={openCourse}
               />
 
               <CourseCard
                 title="PPS"
-                lessons={15}
-                completed={5}
+                {...getCourseProgress("PPS", 6)}
                 image="https://images.unsplash.com/photo-1515879218367-8466d910aaa4"
                 onContinue={openCourse}
               />
 
               <CourseCard
                 title="BEE"
-                lessons={22}
-                completed={10}
+                {...getCourseProgress("BEE", 22)}
                 image="https://play-lh.googleusercontent.com/Nw1chszQ6BOtLJYQEI8cySx3a6muFCb5yL1O49Btmxv7mfd_IWexKur4gkkrfdYKJDG_"
                 onContinue={openCourse}
               />
