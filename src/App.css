@@ -993,3 +993,225 @@ body.dark .day {
 body.dark .day:hover {
   background: #374151 !important;
 }
+
+/* 
+   TIME TRACKER — IMPROVE UI
+ */
+
+.tracker-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* MAIN CARD */
+.tracker-card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 36px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+/* TITLE */
+.tracker-title {
+  margin-top: 0;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* STATUS INDICATOR */
+.status {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.status.running {
+  color: #22c55e;
+}
+
+.status.stopped {
+  color: #ef4444;
+}
+
+/* DIGITAL TIME */
+.time-display {
+  font-size: 52px;
+  margin: 24px 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* BUTTON GROUP */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+/* SECONDARY BUTTON */
+.secondary-btn {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.secondary-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* SESSION HISTORY CARD */
+.session-card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.session-card h3 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+/* SESSION ITEM */
+.session-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bg-content);
+  margin-bottom: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.session-item:hover {
+  transform: translateX(4px);
+}
+
+/* EMPTY STATE */
+.empty {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .tracker-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* CLOCK FLOAT EFFECT */
+.tracker-card svg {
+  transition: transform 0.4s ease;
+}
+
+.tracker-card:hover svg {
+  transform: scale(1.03);
+}
+
+/* SMOOTH CLOCK HAND MOVEMENT */
+.tracker-card line {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* TIMER PULSE WHEN RUNNING */
+.status.running {
+  animation: pulseGlow 1.6s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* BUTTON PRESS FEEDBACK */
+.primary-btn,
+.secondary-btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.primary-btn:active,
+.secondary-btn:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+/* TIME DISPLAY SMOOTH CHANGE */
+.time-display {
+  transition: all 0.25s ease;
+}
+
+/* SESSION ENTRY APPEAR ANIMATION */
+.session-item {
+  animation: fadeSlideIn 0.4s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Greeting text */
+.greeting {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* Daily total highlight */
+.daily-total {
+  background: var(--bg-content);
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Session duration alignment */
+.session-item span {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Smooth card hover depth */
+.tracker-card,
+.session-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tracker-card:hover,
+.session-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
