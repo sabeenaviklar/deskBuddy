@@ -6,6 +6,7 @@ import LeaveTracker from "./LeaveTracker";
 import TodoBoard from "./TodoBoard";
 import CourseCard from "../components/CourseCard";
 import CourseProgress from "../components/CourseProgress";
+import ContactPage from "./Contact";
 
 function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
@@ -125,6 +126,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
         {!activeCourse && view === "time" && <TimeTracker />}
         {!activeCourse && view === "todo" && <TodoBoard />}
         {!activeCourse && view === "leave" && <LeaveTracker />}
+        {!activeCourse && view === "Contact" && <ContactPage />}
       </main>
     </div>
   );
