@@ -1215,3 +1215,99 @@ body.dark .day:hover {
   transform: translateY(-3px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 }
+
+/* ======================
+   CONTACT PAGE
+====================== */
+
+.contact-container {
+  max-width: 520px;
+  margin: 50px auto;
+  padding: 28px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  color: var(--text-main);
+}
+
+.contact-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+/* Form layout */
+
+.contact-form .form-group {
+  margin-bottom: 18px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* Inputs */
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--text-muted);
+  background: var(--bg-content);
+  color: var(--text-main);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--bg-card);
+}
+
+/* Button */
+
+.contact-form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.contact-form button:hover {
+  background: var(--primary-light);
+}
+
+/* Validation */
+
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.success {
+  color: #22c55e;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .contact-container {
+    margin: 25px 15px;
+    padding: 20px;
+  }
+}
