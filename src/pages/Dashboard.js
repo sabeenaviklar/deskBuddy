@@ -7,6 +7,7 @@ import TodoBoard from "./TodoBoard";
 import CourseCard from "../components/CourseCard";
 import CourseProgress from "../components/CourseProgress";
 import ContactPage from "./Contact";
+import StudySchedule from "./StudySchedule";
 
 function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
@@ -34,6 +35,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
   return (
     <div className="layout">
       <Sidebar
+        currentView={view}
         setView={(v) => {
           setView(v);
           setActiveCourse(null);
@@ -123,6 +125,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
         )}
 
         {/* ================= OTHER VIEWS ================= */}
+        {!activeCourse && view === "schedule" && <StudySchedule />}
         {!activeCourse && view === "time" && <TimeTracker />}
         {!activeCourse && view === "todo" && <TodoBoard />}
         {!activeCourse && view === "leave" && <LeaveTracker />}
