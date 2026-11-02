@@ -19,6 +19,7 @@ This project showcases component-based architecture, efficient state management,
 * 🔐 **Authentication**: Functional Sign Up & Login system.
 * 📊 **Course Tracking**: Visualize academic progress with dynamic progress bars.
 * ⏱️ **Study Time Tracker**: Integrated Start/Stop/Reset timer for deep work sessions.
+* 🗓️ **Study Timetable**: Plan study sessions by setting subjects, customized time slots, and viewing daily schedules with weekly overviews.
 * ⚡ **Harry Potter–Themed To-Do Board**: Manage tasks with a touch of magic.
 * 📅 **Leave Tracker**: Log absences with a calendar view and visual donut charts.
 * 💾 **Persistent Storage**: All data is saved to `localStorage`, so your progress stays even after a refresh.

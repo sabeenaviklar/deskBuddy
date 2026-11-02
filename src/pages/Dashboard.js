@@ -7,6 +7,11 @@ import TodoBoard from "./TodoBoard";
 import CourseCard from "../components/CourseCard";
 import CourseProgress from "../components/CourseProgress";
 import ContactPage from "./Contact";
+import StudyTimetable, {
+  getTodayName,
+  formatTime12h,
+  DEFAULT_TIMETABLE
+} from "./StudyTimetable";
 
 function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
@@ -14,6 +19,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [activeCourse, setActiveCourse] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const todayName = getTodayName();
 
   const getCourseProgress = (courseName, totalLessons) => {
     const data = JSON.parse(
@@ -27,6 +33,20 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
     };
   };
 
+  const getTodaySessions = () => {
+    try {
+      const data =
+        JSON.parse(localStorage.getItem("study_timetable")) || DEFAULT_TIMETABLE;
+      return data
+        .filter((s) => s.day === todayName)
+        .sort((a, b) => a.startTime.localeCompare(b.startTime));
+    } catch {
+      return [];
+    }
+  };
+
+  const todaySessions = getTodaySessions();
+
   const openCourse = (course) => {
     setActiveCourse(course);
   };
@@ -34,6 +54,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
   return (
     <div className="layout">
       <Sidebar
+        currentView={view}
         setView={(v) => {
           setView(v);
           setActiveCourse(null);
@@ -58,7 +79,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
             course={activeCourse}
             goBack={() => {
               setActiveCourse(null);
-              forceUpdate(n => n + 1);
+              forceUpdate((n) => n + 1);
             }}
           />
         )}
@@ -86,6 +107,71 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
                 <h2>10 / 15</h2>
                 <span>Mocks</span>
               </div>
+            </div>
+
+            {/* ================= TODAY'S TIMETABLE PREVIEW ================= */}
+            <div className="dashboard-schedule-preview">
+              <div className="schedule-preview-header">
+                <div>
+                  <span className="section-eyebrow">📅 STUDY TIMETABLE</span>
+                  <h3>Today's Schedule ({todayName})</h3>
+                </div>
+                <button
+                  className="view-timetable-link-btn"
+                  onClick={() => setView("timetable")}
+                >
+                  View Full Timetable →
+                </button>
+              </div>
+
+              {todaySessions.length === 0 ? (
+                <div className="preview-empty">
+                  <p>No study sessions scheduled for today.</p>
+                  <button
+                    className="plan-today-btn"
+                    onClick={() => setView("timetable")}
+                  >
+                    + Plan Today's Schedule
+                  </button>
+                </div>
+              ) : (
+                <div className="preview-sessions-grid">
+                  {todaySessions.slice(0, 3).map((session) => (
+                    <div
+                      key={session.id}
+                      className="preview-session-card"
+                      style={{ borderLeftColor: session.color || "#3b82f6" }}
+                    >
+                      <div className="preview-time">
+                        {formatTime12h(session.startTime)} -{" "}
+                        {formatTime12h(session.endTime)}
+                      </div>
+                      <div className="preview-subject">{session.subject}</div>
+                      {session.topic && (
+                        <div className="preview-topic">{session.topic}</div>
+                      )}
+                      <div className="preview-badge-row">
+                        <span className="preview-type-pill">
+                          {session.sessionType || "Study"}
+                        </span>
+                        {session.completed && (
+                          <span className="preview-done-pill">✓ Done</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  {todaySessions.length > 3 && (
+                    <div
+                      className="preview-more-card"
+                      onClick={() => setView("timetable")}
+                    >
+                      <span>+{todaySessions.length - 3} more</span>
+                      <small>Click to view all</small>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <h2>My Courses</h2>
@@ -123,6 +209,9 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
         )}
 
         {/* ================= OTHER VIEWS ================= */}
+        {!activeCourse && view === "timetable" && (
+          <StudyTimetable onNavigate={setView} />
+        )}
         {!activeCourse && view === "time" && <TimeTracker />}
         {!activeCourse && view === "todo" && <TodoBoard />}
         {!activeCourse && view === "leave" && <LeaveTracker />}
