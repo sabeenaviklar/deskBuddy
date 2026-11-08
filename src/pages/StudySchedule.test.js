@@ -1,12 +1,17 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import StudySchedule, {
   formatTime12,
   calculateDuration,
+  isSlotActiveNow,
+  isValidSession,
+  isValidSchedule,
+  generateUniqueSessionId,
 } from "./StudySchedule";
 
 describe("StudySchedule Component", () => {
   beforeEach(() => {
     localStorage.clear();
+    jest.restoreAllMocks();
   });
 
   test("helper functions format time and duration correctly", () => {
@@ -18,6 +23,77 @@ describe("StudySchedule Component", () => {
     expect(calculateDuration("09:00", "10:30")).toBe("1h 30m");
     expect(calculateDuration("10:00", "11:00")).toBe("1h");
     expect(calculateDuration("14:00", "14:45")).toBe("45m");
+  });
+
+  test("isValidSession and isValidSchedule validate structure correctly", () => {
+    expect(isValidSession(null)).toBe(false);
+    expect(isValidSession({})).toBe(false);
+    expect(
+      isValidSession({
+        id: 1,
+        subject: "Math",
+        day: "Monday",
+        startTime: "09:00",
+        endTime: "10:00",
+      })
+    ).toBe(true);
+
+    expect(isValidSchedule({})).toBe(false);
+    expect(isValidSchedule("invalid")).toBe(false);
+    expect(isValidSchedule([{}])).toBe(false);
+    expect(
+      isValidSchedule([
+        {
+          id: 1,
+          subject: "Math",
+          day: "Monday",
+          startTime: "09:00",
+          endTime: "10:00",
+        },
+      ])
+    ).toBe(true);
+  });
+
+  test("generateUniqueSessionId prevents ID collisions", () => {
+    const fixedTime = 1700000000000;
+    jest.spyOn(Date, "now").mockReturnValue(fixedTime);
+
+    const existingSessions = [{ id: fixedTime }, { id: fixedTime + 1 }];
+    const uniqueId = generateUniqueSessionId(existingSessions);
+
+    expect(uniqueId).toBe(fixedTime + 2);
+  });
+
+  test("isSlotActiveNow correctly identifies whether a slot is currently ongoing", () => {
+    // 2026-11-09 is a Monday
+    const monday10AM = new Date("2026-11-09T10:00:00");
+    expect(isSlotActiveNow("Monday", "09:30", "10:30", monday10AM)).toBe(true);
+    expect(isSlotActiveNow("Monday", "10:30", "11:30", monday10AM)).toBe(false);
+    expect(isSlotActiveNow("Tuesday", "09:30", "10:30", monday10AM)).toBe(false);
+  });
+
+  test("recovers gracefully when localStorage contains invalid non-array JSON", () => {
+    localStorage.setItem("deskbuddy_study_schedule", JSON.stringify({}));
+    render(<StudySchedule />);
+
+    // Should not crash and should render default schedule
+    expect(screen.getByText(/Study Schedule/i)).toBeInTheDocument();
+    expect(screen.getByText("Planned Sessions")).toBeInTheDocument();
+  });
+
+  test("handles storage quota exceeded errors gracefully", () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("QuotaExceededError");
+    });
+
+    render(<StudySchedule />);
+
+    expect(
+      screen.getByText(
+        /Storage quota reached or unavailable\. Your schedule changes could not be saved\./i
+      )
+    ).toBeInTheDocument();
   });
 
   test("renders study schedule title and metrics", () => {

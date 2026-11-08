@@ -15,6 +15,14 @@
 //   export default Navbar;
 
 //pages/Sidebar.js
+/**
+ * Sidebar navigation component providing access to views and logout.
+ * @param {Object} props - Component properties.
+ * @param {Function} props.setView - Callback function to change current active view.
+ * @param {string} props.currentView - Currently selected view name.
+ * @param {Function} props.logout - Callback function to log out user.
+ * @returns {JSX.Element} The rendered Sidebar component.
+ */
 function Sidebar({ setView, currentView, logout }) {
   return (
     <aside className="sidebar">

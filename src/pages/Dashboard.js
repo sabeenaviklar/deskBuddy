@@ -9,6 +9,14 @@ import CourseProgress from "../components/CourseProgress";
 import ContactPage from "./Contact";
 import StudySchedule from "./StudySchedule";
 
+/**
+ * Dashboard main component rendering application views and navigation layout.
+ * @param {Object} props - Component properties.
+ * @param {Function} props.setUser - Callback function to set user session.
+ * @param {boolean} props.darkMode - Flag indicating if dark theme is active.
+ * @param {Function} props.setDarkMode - Callback function to toggle dark theme.
+ * @returns {JSX.Element} The rendered Dashboard component.
+ */
 function Dashboard({ setUser, darkMode, setDarkMode }) {
   const [view, setView] = useState("dashboard");
   const [, forceUpdate] = useState(0);

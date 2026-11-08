@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const DAYS_OF_WEEK = [
   "Monday",
@@ -63,8 +63,12 @@ const DEFAULT_SCHEDULE = [
   },
 ];
 
-// Helper: Get today's day name matching DAYS_OF_WEEK
-const getTodayDayName = () => {
+/**
+ * Retrieves the day name (e.g. "Monday") for a given date.
+ * @param {Date} [date=new Date()] - Target date object.
+ * @returns {string} Name of the day matching DAYS_OF_WEEK.
+ */
+export const getTodayDayName = (date = new Date()) => {
   const dayNames = [
     "Sunday",
     "Monday",
@@ -74,10 +78,14 @@ const getTodayDayName = () => {
     "Friday",
     "Saturday",
   ];
-  return dayNames[new Date().getDay()];
+  return dayNames[date.getDay()];
 };
 
-// Helper: Format 24-hour time "09:00" to "9:00 AM"
+/**
+ * Formats a 24-hour time string ("09:00") into 12-hour format ("9:00 AM").
+ * @param {string} time24 - Time string in "HH:MM" format.
+ * @returns {string} Formatted 12-hour time string or empty string.
+ */
 export const formatTime12 = (time24) => {
   if (!time24) return "";
   const [hourStr, minStr] = time24.split(":");
@@ -88,7 +96,12 @@ export const formatTime12 = (time24) => {
   return `${hour}:${minute} ${ampm}`;
 };
 
-// Helper: Calculate duration in minutes and return friendly string
+/**
+ * Computes duration between start and end times and returns a friendly string.
+ * @param {string} startTime - Start time in "HH:MM" format.
+ * @param {string} endTime - End time in "HH:MM" format.
+ * @returns {string} Friendly duration string (e.g. "1h 30m", "45m") or empty string.
+ */
 export const calculateDuration = (startTime, endTime) => {
   if (!startTime || !endTime) return "";
   const [startH, startM] = startTime.split(":").map(Number);
@@ -102,12 +115,18 @@ export const calculateDuration = (startTime, endTime) => {
   return `${mins}m`;
 };
 
-// Helper: Check if slot is active right now
-const isSlotActiveNow = (day, startTime, endTime) => {
-  const today = getTodayDayName();
+/**
+ * Checks if a timetable slot is active given the current day and time.
+ * @param {string} day - Day of the week.
+ * @param {string} startTime - Slot start time in "HH:MM" format.
+ * @param {string} endTime - Slot end time in "HH:MM" format.
+ * @param {Date} [now=new Date()] - Reference date object.
+ * @returns {boolean} True if the slot is currently active.
+ */
+export const isSlotActiveNow = (day, startTime, endTime, now = new Date()) => {
+  const today = getTodayDayName(now);
   if (today !== day) return false;
 
-  const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   const [startH, startM] = startTime.split(":").map(Number);
@@ -118,14 +137,81 @@ const isSlotActiveNow = (day, startTime, endTime) => {
   return currentMinutes >= startMinutes && currentMinutes <= endMinutes;
 };
 
+/**
+ * Validates whether an object has the required fields of a study session.
+ * @param {any} session - The session object to validate.
+ * @returns {boolean} True if the object is a valid session.
+ */
+export const isValidSession = (session) => {
+  return (
+    Boolean(session) &&
+    typeof session === "object" &&
+    (typeof session.id === "string" || typeof session.id === "number") &&
+    typeof session.subject === "string" &&
+    typeof session.day === "string" &&
+    DAYS_OF_WEEK.includes(session.day) &&
+    typeof session.startTime === "string" &&
+    typeof session.endTime === "string"
+  );
+};
+
+/**
+ * Validates whether the given data is an array of valid sessions.
+ * @param {any} data - Parsed data from storage.
+ * @returns {boolean} True if data is an array of valid sessions.
+ */
+export const isValidSchedule = (data) => {
+  return Array.isArray(data) && data.every(isValidSession);
+};
+
+/**
+ * Generates an ID guaranteed to be unique across all existing sessions.
+ * @param {Array<{id: number|string}>} existingSessions - List of existing sessions.
+ * @returns {number} A unique numeric identifier.
+ */
+export const generateUniqueSessionId = (existingSessions = []) => {
+  const existingIds = new Set(existingSessions.map((s) => s.id));
+  let candidateId = Date.now();
+  while (existingIds.has(candidateId)) {
+    candidateId += 1;
+  }
+  return candidateId;
+};
+
+/**
+ * StudySchedule component allowing users to manage, view, and track daily study sessions.
+ * @returns {JSX.Element} The rendered StudySchedule view.
+ */
 function StudySchedule() {
   const todayName = getTodayDayName();
   const [selectedDay, setSelectedDay] = useState(todayName);
+  const [currentTime, setCurrentTime] = useState(() => new Date());
+  const [storageError, setStorageError] = useState("");
+  const successTimeoutRef = useRef(null);
+
+  // Refresh clock state every 30 seconds for live active badges
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Clear pending success timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (successTimeoutRef.current) {
+        clearTimeout(successTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const [schedule, setSchedule] = useState(() => {
     try {
       const saved = localStorage.getItem("deskbuddy_study_schedule");
-      return saved ? JSON.parse(saved) : DEFAULT_SCHEDULE;
+      if (!saved) return DEFAULT_SCHEDULE;
+      const parsed = JSON.parse(saved);
+      return isValidSchedule(parsed) ? parsed : DEFAULT_SCHEDULE;
     } catch {
       return DEFAULT_SCHEDULE;
     }
@@ -144,12 +230,26 @@ function StudySchedule() {
   const [formSuccess, setFormSuccess] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
 
-  // Save to localStorage on change
+  // Save to localStorage on change with error handling
   useEffect(() => {
-    localStorage.setItem("deskbuddy_study_schedule", JSON.stringify(schedule));
+    try {
+      localStorage.setItem(
+        "deskbuddy_study_schedule",
+        JSON.stringify(schedule)
+      );
+      setStorageError("");
+    } catch (err) {
+      console.error("Failed to save schedule to localStorage:", err);
+      setStorageError(
+        "Storage quota reached or unavailable. Your schedule changes could not be saved."
+      );
+    }
   }, [schedule]);
 
-  // Form input handler
+  /**
+   * Handles form input field changes.
+   * @param {React.ChangeEvent<HTMLInputElement|HTMLSelectElement>} e - Change event.
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -159,7 +259,10 @@ function StudySchedule() {
     setFormError("");
   };
 
-  // Add new session
+  /**
+   * Handles adding a new study session to the schedule.
+   * @param {React.FormEvent} e - Form submission event.
+   */
   const handleAddSession = (e) => {
     e.preventDefault();
 
@@ -180,7 +283,7 @@ function StudySchedule() {
     }
 
     const newSession = {
-      id: Date.now(),
+      id: generateUniqueSessionId(schedule),
       subject: formData.subject.trim(),
       topic: formData.topic.trim(),
       day: formData.day,
@@ -192,7 +295,14 @@ function StudySchedule() {
 
     setSchedule((prev) => [...prev, newSession]);
     setFormSuccess(`Scheduled "${formData.subject.trim()}" successfully!`);
-    setTimeout(() => setFormSuccess(""), 3000);
+
+    if (successTimeoutRef.current) {
+      clearTimeout(successTimeoutRef.current);
+    }
+    successTimeoutRef.current = setTimeout(() => {
+      setFormSuccess("");
+      successTimeoutRef.current = null;
+    }, 3000);
 
     // Switch view to the day added
     setSelectedDay(formData.day);
@@ -207,7 +317,10 @@ function StudySchedule() {
     setShowAddForm(false);
   };
 
-  // Toggle completion
+  /**
+   * Toggles the completion status of a session by ID.
+   * @param {number|string} id - The ID of the session to toggle.
+   */
   const toggleCompleted = (id) => {
     setSchedule((prev) =>
       prev.map((item) =>
@@ -216,7 +329,10 @@ function StudySchedule() {
     );
   };
 
-  // Delete session
+  /**
+   * Deletes a session from the schedule by ID.
+   * @param {number|string} id - The ID of the session to delete.
+   */
   const handleDeleteSession = (id) => {
     setSchedule((prev) => prev.filter((item) => item.id !== id));
   };
@@ -296,6 +412,7 @@ function StudySchedule() {
       </div>
 
       {/* Form Feedback Messages */}
+      {storageError && <div className="schedule-error">{storageError}</div>}
       {formSuccess && <div className="schedule-success">{formSuccess}</div>}
 
       {/* Add Study Session Form */}
@@ -488,7 +605,8 @@ function StudySchedule() {
               const activeNow = isSlotActiveNow(
                 session.day,
                 session.startTime,
-                session.endTime
+                session.endTime,
+                currentTime
               );
               const duration = calculateDuration(
                 session.startTime,
