@@ -1311,3 +1311,643 @@ body.dark .day:hover {
     padding: 20px;
   }
 }
+/* =================================
+   RESPONSIVE TODO BOARD
+================================= */
+
+/* Tablet */
+@media screen and (max-width: 900px) {
+  .hp-board {
+    padding: 20px;
+  }
+
+  .hp-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .hp-column {
+    min-width: 0;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+  .hp-board {
+    padding: 12px;
+  }
+
+  .hp-board h2 {
+    font-size: 21px;
+  }
+
+  .add-task {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .add-task input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .add-task button {
+    width: 100%;
+  }
+
+  .hp-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .hp-column {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+  }
+
+  .hp-card {
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .actions button {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
+/* =================================
+   TIME TRACKER RESPONSIVENESS
+================================= */
+
+@media screen and (max-width: 900px) {
+  .tracker-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .tracker-card,
+  .session-card {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .tracker-container {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .tracker-title {
+    font-size: 22px;
+  }
+
+  .tracker-card,
+  .session-card {
+    padding: 18px;
+  }
+
+  .time-display {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .controls button {
+    flex: 1 1 120px;
+    min-height: 44px;
+  }
+
+  .daily-total {
+    overflow-wrap: anywhere;
+  }
+
+  .session-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow-wrap: anywhere;
+  }
+}
+/* =================================
+   LEAVE TRACKER RESPONSIVENESS
+================================= */
+
+@media screen and (max-width: 900px) {
+  .calendar-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .calendar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .panel {
+    min-width: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .calendar-wrapper {
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  .calendar-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .calendar-header h4 {
+    font-size: 18px;
+  }
+
+  .calendar-grid {
+    width: 100%;
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .day-label,
+  .day {
+    min-width: 0;
+    padding: 6px 2px;
+    font-size: 12px;
+  }
+
+  .leave-input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .leave-input input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .leave-count {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .leave-modal {
+    width: calc(100% - 32px);
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+
+  .leave-modal input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+/* =====================================
+   DASHBOARD RESPONSIVENESS
+===================================== */
+
+/* Tablet screens */
+@media screen and (max-width: 900px) {
+
+  .welcome {
+    width: 100%;
+    padding: 24px;
+  }
+
+  .welcome h1 {
+    font-size: 26px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .course-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+}
+
+/* Mobile screens */
+@media screen and (max-width: 600px) {
+
+  .welcome {
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+
+  .welcome h1 {
+    font-size: 21px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .welcome p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 18px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .courses-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .course-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .course-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .course-body {
+    padding: 14px;
+  }
+
+}
+
+/* Very small mobile screens */
+@media screen and (max-width: 380px) {
+
+  .welcome h1 {
+    font-size: 19px;
+  }
+
+  .welcome p {
+    font-size: 13px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+}
+/* =====================================
+   MOBILE RESPONSIVENESS - DESK BUDDY
+===================================== */
+
+/* Tablet */
+@media screen and (max-width: 900px) {
+
+  .layout {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    padding: 20px 12px;
+  }
+
+  .main {
+    min-width: 0;
+    padding: 20px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+
+  .layout {
+    flex-direction: column;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    border-radius: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebar h2 {
+    width: 100%;
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
+
+  .sidebar button {
+    flex: 1 1 40%;
+    margin: 0;
+    padding: 11px 8px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .sidebar .logout {
+    margin-top: 0;
+  }
+
+  .main {
+    width: 100%;
+    min-width: 0;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .topbar input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .theme-toggle {
+    width: 100%;
+  }
+
+  .welcome {
+    padding: 20px;
+  }
+
+  .welcome h1 {
+    font-size: 23px;
+    line-height: 1.4;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .course-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .course-image {
+    height: 180px;
+  }
+
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 380px) {
+
+  .main {
+    padding: 12px;
+  }
+
+  .sidebar {
+    padding: 12px;
+  }
+
+  .sidebar button {
+    font-size: 12px;
+    padding: 10px 5px;
+  }
+
+  .welcome {
+    padding: 16px;
+  }
+
+  .welcome h1 {
+    font-size: 20px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+}
+/* =====================================
+   LOGIN AND SIGNUP RESPONSIVENESS
+===================================== */
+
+@media screen and (max-width: 900px) {
+  .auth-wrapper {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .auth-left {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 50px 40px;
+  }
+
+  .auth-right {
+    display: none;
+  }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 600px) {
+  .auth-wrapper {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .auth-left {
+    width: 100%;
+    min-height: 100vh;
+    padding: 35px 22px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .auth-left h2 {
+    font-size: 27px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .auth-left input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 6px;
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+
+  .primary-btn {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .switch-row {
+    margin-top: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .switch-btn {
+    min-height: 40px;
+  }
+
+  .forgot {
+    margin-bottom: 24px;
+  }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 380px) {
+  .auth-left {
+    padding: 28px 16px;
+  }
+
+  .auth-left h2 {
+    font-size: 24px;
+  }
+
+  .switch-row {
+    font-size: 12px;
+  }
+}
+/* =====================================
+   CONTACT PAGE RESPONSIVENESS
+===================================== */
+
+@media screen and (max-width: 600px) {
+  .contact-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 15px auto;
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .contact-container h2 {
+    font-size: 22px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+/* =====================================
+   CONTACT PAGE RESPONSIVENESS
+===================================== */
+
+@media screen and (max-width: 600px) {
+  .contact-container {
+    width: calc(100% - 24px);
+    max-width: 520px;
+    margin: 16px auto;
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .contact-container h2 {
+    font-size: 22px;
+  }
+
+  .contact-form .form-group {
+    width: 100%;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+/* Course Progress Table Responsiveness */
+.progress-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.progress-table {
+  min-width: 550px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+@media screen and (max-width: 600px) {
+  .progress-table-wrapper {
+    margin-top: 12px;
+  }
+
+  .progress-table th,
+  .progress-table td {
+    padding: 10px;
+    white-space: nowrap;
+  }
+}
