@@ -1,3 +1,4 @@
+import PomodoroTimer from "../components/PomodoroTimer";
 import { useState, useRef, useEffect } from "react";
 
 function TimeTracker() {
@@ -116,6 +117,7 @@ function TimeTracker() {
   /* ================= UI ================= */
 
   return (
+    <>
     <div className="tracker-container">
       {/* MAIN CARD */}
       <div className="tracker-card">
@@ -186,7 +188,10 @@ function TimeTracker() {
           ))
         )}
       </div>
-    </div>
+       </div>
+
+    <PomodoroTimer />
+    </>
   );
 }
 
