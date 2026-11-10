@@ -51,7 +51,12 @@ function TimeTracker() {
   };
 
   /* ================= TIMER ================= */
-
+const getLocalDate = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
   const start = () => {
     if (timerRef.current) return;
 
@@ -81,6 +86,7 @@ function TimeTracker() {
     if (duration > 0) {
       const newSession = {
         id: Date.now(),
+        date: getLocalDate(startTime),
         duration,
         start: startTime.toLocaleTimeString([], {
           hour: "2-digit",
@@ -106,7 +112,9 @@ function TimeTracker() {
 
   /* ================= DAILY TOTAL ================= */
 
-  const totalToday = sessions.reduce((acc, s) => acc + s.duration, 0);
+  const totalToday = sessions
+  .filter((session) => session.date === getLocalDate())
+  .reduce((acc, session) => acc + Number(session.duration || 0), 0);
 
   /* ================= CLOCK ANGLES ================= */
   const secondAngle = (seconds % 60) * 6;
@@ -178,7 +186,9 @@ function TimeTracker() {
             Start tracking to record your first session 🚀
           </p>
         ) : (
-          sessions.map((s) => (
+          sessions
+  .filter((s) => s.date === getLocalDate())
+  .map((s) => (
             <div key={s.id} className="session-item">
               ⏱ {s.start} — {s.end}
               <span>{formatTime(s.duration)}</span>

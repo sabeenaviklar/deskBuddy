@@ -1311,3 +1311,235 @@ body.dark .day:hover {
     padding: 20px;
   }
 }
+/* ==============================
+   WEEKLY PRODUCTIVITY ANALYTICS
+============================== */
+
+.analytics-page {
+  padding: 24px;
+  color: var(--text-main);
+}
+
+.analytics-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.analytics-heading h1 {
+  margin: 6px 0;
+  font-size: 30px;
+}
+
+.analytics-heading p {
+  color: var(--text-muted);
+  margin: 6px 0;
+}
+
+.analytics-eyebrow {
+  color: var(--primary) !important;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.analytics-week {
+  background: var(--bg-card);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.analytics-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.analytics-stat {
+  background: var(--bg-card);
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.analytics-stat span,
+.analytics-stat small {
+  display: block;
+  color: var(--text-muted);
+}
+
+.analytics-stat strong {
+  display: block;
+  font-size: 30px;
+  margin: 12px 0 6px;
+  color: var(--primary);
+}
+
+.analytics-stat small {
+  font-size: 12px;
+}
+
+.analytics-panel {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.analytics-panel h2 {
+  margin: 0 0 8px;
+}
+
+.analytics-panel p {
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+.analytics-panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.analytics-panel-title > strong {
+  color: var(--primary);
+}
+
+.weekly-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 14px;
+  height: 240px;
+  margin-top: 24px;
+}
+
+.weekly-chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.weekly-chart-value {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.weekly-chart-track {
+  width: 100%;
+  max-width: 48px;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--bg-content);
+}
+
+.weekly-chart-bar {
+  width: 100%;
+  min-height: 0;
+  background: linear-gradient(180deg, #629fad, #296374);
+  border-radius: 10px;
+  transition: height 0.3s ease;
+}
+
+.weekly-chart-column > strong {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.weekly-chart-column > small {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.analytics-day-row {
+  display: grid;
+  grid-template-columns: 85px 1fr 90px;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.analytics-day-row > span strong,
+.analytics-day-row > span small {
+  display: block;
+}
+
+.analytics-day-row > span small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.analytics-day-progress {
+  height: 9px;
+  background: var(--bg-content);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.analytics-day-progress i {
+  display: block;
+  height: 100%;
+  background: #629fad;
+  border-radius: 20px;
+}
+
+.analytics-day-row > strong {
+  text-align: right;
+  font-size: 13px;
+}
+
+.analytics-note {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+@media (max-width: 1000px) {
+  .analytics-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .analytics-page {
+    padding: 14px;
+  }
+
+  .analytics-heading h1 {
+    font-size: 24px;
+  }
+
+  .analytics-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-panel {
+    padding: 16px;
+  }
+
+  .weekly-chart {
+    gap: 6px;
+  }
+
+  .weekly-chart-value {
+    font-size: 9px;
+  }
+
+  .analytics-day-row {
+    grid-template-columns: 65px 1fr 75px;
+    gap: 8px;
+  }
+}

@@ -1,3 +1,4 @@
+import WeeklyAnalytics from "./WeeklyAnalytics";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -124,6 +125,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
 
         {/* ================= OTHER VIEWS ================= */}
         {!activeCourse && view === "time" && <TimeTracker />}
+        {!activeCourse && view === "analytics" && <WeeklyAnalytics />}
         {!activeCourse && view === "todo" && <TodoBoard />}
         {!activeCourse && view === "leave" && <LeaveTracker />}
         {!activeCourse && view === "Contact" && <ContactPage />}
