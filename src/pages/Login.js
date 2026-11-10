@@ -149,7 +149,7 @@
 // pages/Login.js
 import loginImg from "./login.png";
 
-function Login({ setPage, setUser }) {
+function Login({ setPage, setUser, darkMode, setDarkMode }) {
   const handleLogin = () => {
     const username = document.getElementById("login-username").value;
     const password = document.getElementById("login-password").value;
@@ -170,6 +170,13 @@ function Login({ setPage, setUser }) {
 
   return (
     <div className="auth-wrapper">
+      <button
+  type="button"
+  className="theme-toggle auth-theme-toggle"
+  onClick={() => setDarkMode((current) => !current)}
+>
+  {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+</button>
       <div className="auth-left">
         <h2>Login</h2>
         <p className="subtitle">Enter your account details</p>

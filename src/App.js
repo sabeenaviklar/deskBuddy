@@ -34,11 +34,20 @@ function App() {
     );
   }
 
-  return page === "login" ? (
-    <Login setPage={setPage} setUser={setUser} />
-  ) : (
-    <Signup setPage={setPage} />
-  );
+ return page === "login" ? (
+  <Login
+    setPage={setPage}
+    setUser={setUser}
+    darkMode={darkMode}
+    setDarkMode={setDarkMode}
+  />
+) : (
+  <Signup
+    setPage={setPage}
+    darkMode={darkMode}
+    setDarkMode={setDarkMode}
+  />
+);
 }
 
 export default App;

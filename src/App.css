@@ -39,7 +39,45 @@ body {
   font-family: "Inter", "Segoe UI", sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.layout,
+.main,
+.topbar,
+.card,
+.panel,
+.course-card,
+.hp-column,
+.calendar-wrapper,
+.tracker-card,
+.session-card {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+input,
+textarea,
+select {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--text-muted);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.analytics-page {
+  color: var(--text-main);
 }
 
 /* ======================
@@ -1310,4 +1348,27 @@ body.dark .day:hover {
     margin: 25px 15px;
     padding: 20px;
   }
+}
+.auth-wrapper {
+  position: relative;
+}
+
+.auth-theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 10;
+}
+
+body.dark .auth-left,
+body.dark .auth-right,
+body.dark .welcome-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+body.dark .subtitle,
+body.dark .welcome-card p,
+body.dark .switch-row {
+  color: var(--text-muted);
 }
