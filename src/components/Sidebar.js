@@ -22,6 +22,7 @@ function Sidebar({ setView, logout }) {
 
       <button onClick={() => setView("dashboard")}>Dashboard</button>
       <button onClick={() => setView("time")}>Time Tracker</button>
+      <button onClick={() => setView("analytics")}>Weekly Analytics</button>
       <button onClick={() => setView("todo")}>To Do</button>
       <button onClick={() => setView("leave")}>Leave Tracker</button>
       <button onClick={() => setView("Contact")}>Contact</button>
