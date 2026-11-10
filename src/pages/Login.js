@@ -1,170 +1,34 @@
-//pages/Login.js
-// import loginImg from "./login.png"; 
-
-// function Login({ setPage, setLoggedIn }) {
-//     const handleLogin = () => {
-//       const username = document.getElementById("login-username").value;
-//       const password = document.getElementById("login-password").value;
-  
-//       const savedUser = JSON.parse(localStorage.getItem("user"));
-  
-//       if (
-//         savedUser &&
-//         savedUser.username === username &&
-//         savedUser.password === password
-//       ) {
-//         setLoggedIn(true);
-//       } else {
-//         alert("Invalid credentials");
-//       }
-//     };
-  
-//     return (
-//       <div className="auth-wrapper">
-//         <div className="auth-left">
-//           <h2>Login</h2>
-//           <p className="subtitle">Enter your account details</p>
-  
-//           <input id="login-username" placeholder="Username" />
-//           <input
-//             id="login-password"
-//             type="password"
-//             placeholder="Password"
-//           />
-  
-//           <span className="forgot">Forgot Password?</span>
-  
-//           <button className="primary-btn" onClick={handleLogin}>
-//             Login
-//           </button>
-  
-//           <div className="switch-row">
-//             <span>Don’t have an account?</span>
-//             <button className="switch-btn" onClick={() => setPage("signup")}>
-//               Sign up
-//             </button>
-//           </div>
-//         </div>
-  
-//         <div className="auth-right">
-//           <div className="welcome-card">
-//             <h1>
-//               Welcome to <br />
-//               <span>Desk Buddy </span>
-//             </h1>
-//             <p>Login to access your account</p>
-  
-//             <img
-//               src={loginImg}
-//               alt="Illustration"
-//               className="welcome-img"
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-  
-//   export default Login;
-  
-// import loginImg from "./login.jpg"; // or "./login.png"
-
-// function Login({ setPage, setUser }) {
-//   const handleLogin = () => {
-//     const username = document.getElementById("login-username").value;
-//     const password = document.getElementById("login-password").value;
-
-//     const savedUser = JSON.parse(localStorage.getItem("user"));
-
-//     if (
-//       savedUser &&
-//       savedUser.username === username &&
-//       savedUser.password === password
-//     ) {
-//       // ✅ FIX: set user instead of setLoggedIn
-//       setUser(savedUser);
-//     } else {
-//       alert("Invalid credentials");
-//     }
-//   };
-
-//   return (
-//     <div className="auth-wrapper">
-//       {/* LEFT PANEL */}
-//       <div className="auth-left">
-//         <h2>Login</h2>
-//         <p className="subtitle">Enter your account details</p>
-
-//         <input
-//           id="login-username"
-//           placeholder="Username"
-//         />
-
-//         <input
-//           id="login-password"
-//           type="password"
-//           placeholder="Password"
-//         />
-
-//         <span className="forgot">Forgot Password?</span>
-
-//         <button className="primary-btn" onClick={handleLogin}>
-//           Login
-//         </button>
-
-//         <div className="switch-row">
-//           <span>Don’t have an account?</span>
-//           <button
-//             className="switch-btn"
-//             onClick={() => setPage("signup")}
-//           >
-//             Sign up
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* RIGHT PANEL */}
-//       <div className="auth-right">
-//         <div className="welcome-card">
-//           <h1>
-//             Welcome to <br />
-//             <span>Desk Buddy</span>
-//           </h1>
-//           <p>Login to access your account</p>
-
-//           <img
-//             src={loginImg}
-//             alt="Login Illustration"
-//             className="welcome-img"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
-
-// pages/Login.js
+import { useState } from "react";
 import loginImg from "./login.png";
 
 function Login({ setPage, setUser }) {
-  const handleLogin = () => {
-    const username = document.getElementById("login-username").value;
-    const password = document.getElementById("login-password").value;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+  const handleLogin = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    setError("");
 
-    if (
-      savedUser &&
-      savedUser.username === username &&
-      savedUser.password === password
-    ) {
-      // ✅ THIS is the correct login
-      setUser(savedUser);
-    } else {
-      alert("Invalid credentials");
+    if (!username.trim() || !password) {
+      setError("Please enter both username and password");
+      return;
+    }
+
+    try {
+      const savedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (
+        savedUser &&
+        savedUser.username === username.trim() &&
+        savedUser.password === password
+      ) {
+        setUser(savedUser);
+      } else {
+        setError("Invalid credentials. Please check your username and password.");
+      }
+    } catch {
+      setError("Error accessing account data.");
     }
   };
 
@@ -174,22 +38,36 @@ function Login({ setPage, setUser }) {
         <h2>Login</h2>
         <p className="subtitle">Enter your account details</p>
 
-        <input id="login-username" placeholder="Username" />
-        <input
-          id="login-password"
-          type="password"
-          placeholder="Password"
-        />
+        {error && <p className="error" style={{ marginBottom: "12px" }}>{error}</p>}
 
-        <span className="forgot">Forgot Password?</span>
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <input
+            id="login-username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+          />
+          <input
+            id="login-password"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
 
-        <button className="primary-btn" onClick={handleLogin}>
-          Login
-        </button>
+          <span className="forgot">Forgot Password?</span>
 
-        <div className="switch-row">
+          <button type="submit" className="primary-btn">
+            Login
+          </button>
+        </form>
+
+        <div className="switch-row" style={{ marginTop: "16px" }}>
           <span>Don’t have an account?</span>
           <button
+            type="button"
             className="switch-btn"
             onClick={() => setPage("signup")}
           >
