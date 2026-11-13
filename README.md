@@ -61,9 +61,19 @@ desk-buddy/
 ```
 
 ## 🛠️ Getting Started (Local Setup)
-Follow these steps to get a local copy up and running:
 
+> First of all install Git on your device if not already installed. You can install Git from this link according to your device OS:
+
+*Link*: https://git-scm.com/install/
+
+> To check if Git is properly installed on your device, run this command in your terminal:
+
+```bash
+git --version
+```
+Now follow these steps to get a local copy up and running:
 ## 1️⃣ Clone the repository
+  
 ```bash
 git clone [https://github.com/your-username/desk-buddy.git](https://github.com/your-username/desk-buddy.git)
 cd desk-buddy
