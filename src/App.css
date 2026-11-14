@@ -1313,9 +1313,202 @@ body.dark .day:hover {
 }
 
 /* ======================
+   DASHBOARD RESPONSIVENESS (existing styles and functionality preserved) */
+
+.layout {
+  min-width: 0;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.sidebar {
+  flex: 0 0 240px;
+  min-width: 0;
+}
+
+.main {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+}
+
+.cards,
+.courses-grid {
+  min-width: 0;
+}
+
+.card,
+.course-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    flex-basis: 210px;
+    padding: 22px 16px;
+  }
+
+  .main {
+    padding: 22px;
+  }
+
+  .cards {
+    gap: 16px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .layout {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex: 0 0 auto;
+    padding: 16px 18px;
+    border-radius: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .sidebar h2 {
+    grid-column: 1 / -1;
+    margin: 0 0 6px;
+  }
+
+  .sidebar button {
+    min-width: 0;
+    margin: 0;
+    padding: 11px 8px;
+    text-align: center;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .sidebar .logout {
+    margin-top: 0;
+  }
+
+  .main {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 20px;
+    overflow: visible;
+  }
+
+  .topbar {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .topbar input {
+    width: min(100%, 260px);
+    min-width: 0;
+    flex: 1 1 180px;
+  }
+
+  .theme-toggle {
+    flex: 0 0 auto;
+  }
+
+  .welcome {
+    padding: 24px;
+  }
+
+  .welcome h1 {
+    font-size: clamp(22px, 4vw, 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 14px;
+    gap: 7px;
+  }
+
+  .sidebar h2 {
+    font-size: 21px;
+  }
+
+  .sidebar button {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .topbar {
+    align-items: stretch;
+  }
+
+  .topbar input {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .theme-toggle {
+    width: 100%;
+  }
+
+  .welcome {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+
+  .welcome p {
+    font-size: 14px;
+  }
+
+  .cards,
+  .courses-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+.course-image {
+  height: 145px;
+}
+
+} /* closes @media (max-width: 480px) */
+
+/* ======================
    STUDY SCHEDULE
 ====================== */
-
+.schedule-container {
+/* ======================
+   STUDY SCHEDULE
+====================== */
 .schedule-container {
   max-width: 1100px;
   width: 100%;
