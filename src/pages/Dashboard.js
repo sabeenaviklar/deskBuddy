@@ -8,6 +8,7 @@ import CourseCard from "../components/CourseCard";
 import CourseProgress from "../components/CourseProgress";
 import ContactPage from "./Contact";
 import StudySchedule from "./StudySchedule";
+import QuickNotes from "./QuickNotes";
 
 /**
  * Dashboard main component rendering application views and navigation layout.
@@ -134,6 +135,7 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
 
         {/* ================= OTHER VIEWS ================= */}
         {!activeCourse && view === "schedule" && <StudySchedule />}
+        {!activeCourse && view === "notes" && <QuickNotes />}
         {!activeCourse && view === "time" && <TimeTracker />}
         {!activeCourse && view === "todo" && <TodoBoard />}
         {!activeCourse && view === "leave" && <LeaveTracker />}

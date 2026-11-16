@@ -41,6 +41,12 @@ function Sidebar({ setView, currentView, logout }) {
         Study Schedule
       </button>
       <button
+        className={currentView === "notes" ? "active" : ""}
+        onClick={() => setView("notes")}
+      >
+        Quick Notes
+      </button>
+      <button
         className={currentView === "time" ? "active" : ""}
         onClick={() => setView("time")}
       >
