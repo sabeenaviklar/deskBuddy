@@ -20,4 +20,13 @@ describe("Dashboard Navigation", () => {
 
     expect(screen.getByText(/📅 Study Schedule/i)).toBeInTheDocument();
   });
+
+  test("can navigate to Quick Notes view", () => {
+    render(<Dashboard setUser={() => {}} darkMode={false} setDarkMode={() => {}} />);
+
+    const notesBtn = screen.getByRole("button", { name: /Quick Notes/i });
+    fireEvent.click(notesBtn);
+
+    expect(screen.getByText(/📝 Quick Notes & Scratchpad/i)).toBeInTheDocument();
+  });
 });
