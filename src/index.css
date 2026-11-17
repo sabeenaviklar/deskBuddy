@@ -22,6 +22,8 @@ code {
   --text-main: #1f2937;
   --text-muted: #6b7280;
 
+  --surface-muted: #f3f4f6;
+  --surface-muted-hover: #e5e7eb;
   --border-color: #cbd5e1;
   --input-bg: #ffffff;
   --focus-ring: rgba(41, 99, 116, 0.4);
@@ -50,6 +52,8 @@ body.dark {
   --text-main: #f9fafb;
   --text-muted: #9ca3af;
 
+  --surface-muted: #1f2937;
+  --surface-muted-hover: #374151;
   --border-color: #374151;
   --input-bg: #1f2937;
   --focus-ring: rgba(98, 159, 173, 0.5);

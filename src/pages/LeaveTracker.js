@@ -357,7 +357,9 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
         {[...Array(daysInMonth)].map((_, i) => {
           const dayNum = i + 1;
           const dateStr = `${year}-${month + 1}-${dayNum}`;
-          const isLeave = leaveDates.includes(dateStr);
+          const leaveEntry = leaves.find((l) => l.date === dateStr);
+          const isLeave = Boolean(leaveEntry);
+          const leaveReason = leaveEntry?.reason;
           const isToday =
             now.getFullYear() === year &&
             now.getMonth() === month &&
@@ -370,13 +372,15 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
               className={`day ${isLeave ? "leave" : ""} ${isToday ? "today" : ""}`}
               onClick={() => onSelectDate(dateStr)}
               aria-pressed={isLeave}
+              title={leaveReason ? `Leave: ${leaveReason}` : (isLeave ? "Leave" : undefined)}
               aria-label={`${new Date(year, month, dayNum).toLocaleDateString("default", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
-              })}${isToday ? ", today" : ""}${isLeave ? ", leave" : ""}`}
+              })}${isToday ? ", today" : ""}${isLeave ? `, leave${leaveReason ? `: ${leaveReason}` : ""}` : ""}`}
             >
-              {dayNum}
+              <span>{dayNum}</span>
+              {isLeave && <span className="leave-dot" aria-hidden="true" />}
             </button>
           );
         })}
