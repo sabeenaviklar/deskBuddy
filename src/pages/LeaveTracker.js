@@ -202,6 +202,42 @@ function LeaveTracker() {
     localStorage.setItem("workingDays", workingDays);
   }, [leaves, workingDays]);
 
+  /* ================= MODAL ESCAPE & SCROLL LOCK ================= */
+  useEffect(() => {
+    if (selectedDate) {
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          setSelectedDate(null);
+          setReason("");
+        }
+      };
+      document.addEventListener("keydown", handleKeyDown);
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [selectedDate]);
+
+  const formatDisplayDate = (dateStr) => {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-").map(Number);
+    if (parts.length === 3) {
+      const [y, m, d] = parts;
+      const dObj = new Date(y, m - 1, d);
+      return dObj.toLocaleDateString("en-GB", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    }
+    return dateStr;
+  };
+
   const addLeave = () => {
     if (!reason) return alert("Please enter reason");
 
@@ -268,19 +304,84 @@ function LeaveTracker() {
 
       {/* MODAL */}
       {selectedDate && (
-        <div className="leave-modal">
-          <h4>Add Leave</h4>
-          <p>{selectedDate}</p>
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            setSelectedDate(null);
+            setReason("");
+          }}
+        >
+          <div
+            className="leave-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-leave-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 id="add-leave-title" className="modal-title">
+              Add Leave
+            </h3>
 
-          <input
-            placeholder="Reason"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
+            <div className="modal-date-chip">
+              <span className="modal-date-icon" aria-hidden="true">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </span>
+              <span className="modal-date-text">
+                {formatDisplayDate(selectedDate)}
+              </span>
+            </div>
 
-          <div className="modal-actions">
-            <button onClick={addLeave}>Save</button>
-            <button onClick={() => setSelectedDate(null)}>Cancel</button>
+            <div className="modal-field">
+              <label htmlFor="leave-reason-input" className="modal-label">
+                Reason
+              </label>
+              <input
+                id="leave-reason-input"
+                type="text"
+                className="modal-input"
+                placeholder="Enter reason for leave..."
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") addLeave();
+                }}
+                autoFocus
+              />
+            </div>
+
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="modal-btn-cancel"
+                onClick={() => {
+                  setSelectedDate(null);
+                  setReason("");
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="modal-btn-save"
+                onClick={addLeave}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -297,8 +398,6 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const now = new Date();
-
-  const leaveDates = leaves.map((l) => l.date);
 
   const prevMonth = () => {
     if (month === 0) {
