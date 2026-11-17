@@ -275,6 +275,7 @@ export default LeaveTracker;
 function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const now = new Date();
 
   const leaveDates = leaves.map((l) => l.date);
 
@@ -296,38 +297,66 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
     <div className="calendar-wrapper">
       {/* HEADER */}
       <div className="calendar-header">
-        <button onClick={prevMonth}>◀</button>
+        <button
+          type="button"
+          className="calendar-nav-btn"
+          onClick={prevMonth}
+          aria-label="Previous month"
+        >
+          ◀
+        </button>
         <h4>
           {new Date(year, month).toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </h4>
-        <button onClick={nextMonth}>▶</button>
+        <button
+          type="button"
+          className="calendar-nav-btn"
+          onClick={nextMonth}
+          aria-label="Next month"
+        >
+          ▶
+        </button>
       </div>
 
       {/* DAYS */}
-      <div className="calendar-grid">
+      <div className="calendar-grid" role="grid" aria-label="Leave calendar">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-          <div key={d} className="day-label">{d}</div>
+          <div key={d} className="day-label" role="columnheader">
+            {d}
+          </div>
         ))}
 
-        {Array(firstDay).fill("").map((_, i) => (
-          <div key={`empty-${i}`} />
+        {Array.from({ length: firstDay }).map((_, i) => (
+          <div key={`empty-${i}`} className="calendar-empty" aria-hidden="true" />
         ))}
 
         {[...Array(daysInMonth)].map((_, i) => {
-          const dateStr = `${year}-${month + 1}-${i + 1}`;
+          const dayNum = i + 1;
+          const dateStr = `${year}-${month + 1}-${dayNum}`;
           const isLeave = leaveDates.includes(dateStr);
+          const isToday =
+            now.getFullYear() === year &&
+            now.getMonth() === month &&
+            now.getDate() === dayNum;
 
           return (
-            <div
-              key={i}
-              className={`day ${isLeave ? "leave" : ""}`}
+            <button
+              type="button"
+              key={dayNum}
+              className={`day ${isLeave ? "leave" : ""} ${isToday ? "today" : ""}`}
               onClick={() => onSelectDate(dateStr)}
+              aria-pressed={isLeave}
+              aria-label={`${new Date(year, month, dayNum).toLocaleDateString("default", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}${isToday ? ", today" : ""}${isLeave ? ", leave" : ""}`}
             >
-              {i + 1}
-            </div>
+              {dayNum}
+            </button>
           );
         })}
       </div>
