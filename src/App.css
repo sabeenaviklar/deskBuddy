@@ -450,38 +450,152 @@ body {
 
 
 /* ======================
-   LEAVE TRACKER
+   LEAVE TRACKER HEADER & STATS
 ====================== */
-.leave-input {
-  margin-bottom: 20px;
+.leave-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 24px 28px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.leave-input label {
+.leave-donut-section {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leave-stats-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.leave-stat-card {
+  background: var(--stat-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.leave-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.leave-stat-label {
+  font-size: 13px;
   font-weight: 600;
-  margin-right: 10px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: block;
 }
 
-.leave-input input {
-  width: 90px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
+.leave-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
 
-/* ======================
-   DONUT CHART
-====================== */
+.leave-stat-danger {
+  color: var(--danger);
+}
+
+.leave-stat-primary {
+  color: var(--primary);
+}
+
+.leave-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.leave-number-input {
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--text-main);
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.leave-number-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+.leave-number-input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* DONUT CHART */
 .donut {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
+  justify-content: center;
 }
 
-.donut p {
+.donut-progress {
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke-opacity 0.3s ease;
+}
+
+.donut-percent {
+  font-size: 24px;
+  font-weight: 700;
+  fill: var(--text-main);
+  font-family: inherit;
+}
+
+.donut-label {
   margin-top: 8px;
+  font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .leave-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .leave-stats-grid {
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .leave-stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ======================
@@ -632,13 +746,7 @@ body {
 }
 
 
-/* ======================
-   LEAVE COUNT
-====================== */
-.leave-count {
-  font-size: 15px;
-  margin-bottom: 10px;
-}
+
 
 /* ======================
    MODAL
@@ -744,12 +852,7 @@ body {
   margin-right: 10px;
 }
 
-.donut {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-}
+
 
 /* ======================
    TODO / KANBAN
@@ -1039,8 +1142,29 @@ body.dark .topbar input {
 body.dark .course-lessons,
 body.dark .day-label,
 body.dark .card span,
-body.dark .donut p {
+body.dark .donut p,
+body.dark .donut-label {
   color: var(--text-muted) !important;
+}
+
+body.dark .leave-header {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .leave-stat-card {
+  background: var(--bg-content) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .leave-number-input {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .donut-percent {
+  fill: var(--text-main) !important;
 }
 
 body.dark .progress-table th {

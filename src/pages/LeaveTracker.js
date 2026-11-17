@@ -211,29 +211,50 @@ function LeaveTracker() {
   };
 
   const leaveCount = leaves.length;
+  const remainingDays = Math.max(workingDays - leaveCount, 0);
   const leavePercent = workingDays
-    ? Math.round((leaveCount / workingDays) * 100)
+    ? Math.min(Math.round((leaveCount / workingDays) * 100), 100)
     : 0;
 
   return (
     <div className="panel">
       <h2>Leave Tracker</h2>
 
-      {/* WORKING DAYS */}
-      <div className="leave-input">
-        <label>Total Working Days</label>
-        <input
-          type="number"
-          value={workingDays}
-          onChange={(e) => setWorkingDays(Number(e.target.value))}
-        />
-      </div>
+      {/* HEADER: DONUT & STAT CARDS */}
+      <div className="leave-header">
+        <div className="leave-donut-section">
+          <DonutChart percent={leavePercent} />
+        </div>
 
-      {/* DONUT */}
-      <DonutChart percent={leavePercent} />
-      <p className="leave-count">
-        Leaves Taken: <b>{leaveCount}</b> / {workingDays}
-      </p>
+        <div className="leave-stats-grid">
+          <div className="leave-stat-card">
+            <span className="leave-stat-label">Leaves Taken</span>
+            <span className="leave-stat-value leave-stat-danger">{leaveCount}</span>
+          </div>
+
+          <div className="leave-stat-card">
+            <label htmlFor="working-days-input" className="leave-stat-label">
+              Working Days
+            </label>
+            <div className="leave-input-wrapper">
+              <input
+                id="working-days-input"
+                type="number"
+                min="0"
+                className="leave-number-input"
+                value={workingDays}
+                onChange={(e) => setWorkingDays(Number(e.target.value))}
+                aria-label="Total Working Days"
+              />
+            </div>
+          </div>
+
+          <div className="leave-stat-card">
+            <span className="leave-stat-label">Remaining</span>
+            <span className="leave-stat-value leave-stat-primary">{remainingDays}</span>
+          </div>
+        </div>
+      </div>
 
       {/* CALENDAR */}
       <Calendar
@@ -368,41 +389,56 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
    DONUT CHART
 ====================== */
 function DonutChart({ percent }) {
-  const dash = percent * 3.77;
+  const radius = 58;
+  const circumference = 2 * Math.PI * radius;
+  const clampedPercent = Math.min(Math.max(percent, 0), 100);
+  const strokeDashoffset = circumference - (circumference * clampedPercent) / 100;
 
   return (
     <div className="donut">
-      <svg width="160" height="160">
+      <svg
+        width="160"
+        height="160"
+        viewBox="0 0 160 160"
+        role="img"
+        aria-label={`Leave percentage: ${clampedPercent}%`}
+      >
+        {/* Track Ring */}
         <circle
           cx="80"
           cy="80"
-          r="60"
-          stroke="#e5e7eb"
-          strokeWidth="14"
+          r={radius}
+          stroke="var(--donut-track)"
+          strokeWidth="16"
           fill="none"
         />
+        {/* Progress Ring */}
         <circle
           cx="80"
           cy="80"
-          r="60"
-          stroke="#ef4444"
-          strokeWidth="14"
+          r={radius}
+          stroke="var(--danger)"
+          strokeWidth="16"
+          strokeLinecap="round"
           fill="none"
-          strokeDasharray={`${dash} 999`}
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeOpacity={clampedPercent === 0 ? 0 : 1}
           transform="rotate(-90 80 80)"
+          className="donut-progress"
         />
+        {/* Center Percentage */}
         <text
           x="50%"
           y="50%"
-          dy="8"
+          dy="0.35em"
           textAnchor="middle"
-          fontSize="22"
-          fontWeight="700"
+          className="donut-percent"
         >
-          {percent}%
+          {clampedPercent}%
         </text>
       </svg>
-      <p>Leave %</p>
+      <span className="donut-label">Leave %</span>
     </div>
   );
 }
