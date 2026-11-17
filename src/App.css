@@ -1197,6 +1197,43 @@ body.dark .day.today {
   outline: 2px solid var(--primary-light) !important;
 }
 
+body.dark .session-card,
+body.dark .tracker-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .daily-total {
+  background: var(--bg-content) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .daily-total-value {
+  color: var(--primary-light) !important;
+}
+
+body.dark .session-item {
+  background: var(--bg-content) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark .session-item:hover {
+  border-color: var(--primary-light) !important;
+}
+
+body.dark .session-dot {
+  background: var(--primary-light) !important;
+  box-shadow: 0 0 0 3px rgba(98, 159, 173, 0.2) !important;
+}
+
+body.dark .session-duration {
+  color: var(--primary-light) !important;
+}
+
+body.dark .session-empty {
+  border-color: var(--border-color) !important;
+}
+
 /* 
    TIME TRACKER — IMPROVE UI
  */
@@ -1278,6 +1315,7 @@ body.dark .day.today {
   background: var(--bg-card);
   border-radius: 24px;
   padding: 26px;
+  border: 1px solid var(--border-color);
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
 }
 
@@ -1286,21 +1324,100 @@ body.dark .day.today {
   margin-bottom: 18px;
 }
 
-/* SESSION ITEM */
+/* SESSION LIST & ITEM */
+.session-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
 .session-item {
-  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
   border-radius: 12px;
   background: var(--bg-content);
-  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 0;
   font-weight: 600;
-  transition: 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .session-item:hover {
   transform: translateX(4px);
+  border-color: var(--primary-light);
+}
+
+.session-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.session-dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px rgba(41, 99, 116, 0.15);
+}
+
+.session-time {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.session-duration {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* EMPTY STATE */
+.session-empty {
+  text-align: center;
+  padding: 36px 16px;
+  border: 2px dashed var(--border-color);
+  border-radius: 16px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.session-empty-icon {
+  color: var(--primary-light);
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.session-empty-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.session-empty-hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 240px;
+}
+
 .empty {
   color: var(--text-muted);
   font-size: 14px;
@@ -1392,19 +1509,32 @@ body.dark .day.today {
   margin-bottom: 6px;
 }
 
-/* Daily total highlight */
+/* Daily total prominent summary */
 .daily-total {
   background: var(--bg-content);
-  padding: 10px 14px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Session duration alignment */
-.session-item span {
+.daily-total-label {
+  font-size: 13px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.daily-total-value {
+  font-size: 24px;
+  font-weight: 800;
   color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
 
 /* Smooth card hover depth */
