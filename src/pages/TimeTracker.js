@@ -108,6 +108,12 @@ function TimeTracker() {
 
   const totalToday = sessions.reduce((acc, s) => acc + s.duration, 0);
 
+  const formatTimeRange = (start, end) => {
+    if (!start && !end) return "";
+    if (!end || start === end) return start || end;
+    return `${start} — ${end}`;
+  };
+
   /* ================= CLOCK ANGLES ================= */
   const secondAngle = (seconds % 60) * 6;
   const minuteAngle = ((seconds / 60) % 60) * 6;
@@ -170,20 +176,33 @@ function TimeTracker() {
         <h3>Today's Sessions</h3>
 
         <div className="daily-total">
-          Total Today: <strong>{formatTime(totalToday)}</strong>
+          <span className="daily-total-label">Total Today</span>
+          <strong className="daily-total-value">{formatTime(totalToday)}</strong>
         </div>
 
         {sessions.length === 0 ? (
-          <p className="empty">
-            Start tracking to record your first session 🚀
-          </p>
-        ) : (
-          sessions.map((s) => (
-            <div key={s.id} className="session-item">
-              ⏱ {s.start} — {s.end}
-              <span>{formatTime(s.duration)}</span>
+          <div className="session-empty">
+            <div className="session-empty-icon" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             </div>
-          ))
+            <p className="session-empty-title">No sessions recorded today</p>
+            <p className="session-empty-hint">Start the timer above to record your first study session.</p>
+          </div>
+        ) : (
+          <div className="session-list">
+            {sessions.map((s) => (
+              <div key={s.id} className="session-item">
+                <div className="session-info">
+                  <span className="session-dot" aria-hidden="true" />
+                  <span className="session-time">{formatTimeRange(s.start, s.end)}</span>
+                </div>
+                <span className="session-duration">{formatTime(s.duration)}</span>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
