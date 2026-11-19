@@ -9,6 +9,69 @@ import CourseProgress from "../components/CourseProgress";
 import ContactPage from "./Contact";
 import StudySchedule from "./StudySchedule";
 
+const DASHBOARD_FALLBACKS = {
+  study: "07h",
+  progress: 75,
+  mocks: "10 / 15"
+};
+
+const COURSES = [
+  { name: "Mathematics", totalLessons: 20 },
+  { name: "Physics", totalLessons: 18 },
+  { name: "PPS", totalLessons: 6 },
+  { name: "BEE", totalLessons: 22 }
+];
+
+const getStoredJSON = (key) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  } catch {
+    return null;
+  }
+};
+
+const getStudyTime = () => {
+  const sessions = getStoredJSON("sessions");
+  if (!Array.isArray(sessions) || sessions.length === 0) {
+    return DASHBOARD_FALLBACKS.study;
+  }
+
+  const totalSeconds = sessions.reduce((total, session) => {
+    const duration = Number(session?.duration);
+    return total + (Number.isFinite(duration) && duration > 0 ? duration : 0);
+  }, 0);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  return hours > 0
+    ? `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`
+    : `${minutes}m`;
+};
+
+const getCourseProgressPercent = () => {
+  const summaries = COURSES.map(({ name, totalLessons }) => {
+    const summary = getStoredJSON(`course_${name}_summary`);
+    return summary && typeof summary === "object"
+      ? { ...summary, totalLessons: Number(summary.totalLessons) || totalLessons }
+      : null;
+  });
+
+  if (!summaries.some(Boolean)) return DASHBOARD_FALLBACKS.progress;
+
+  const completedLessons = summaries.reduce((total, summary) => {
+    const completed = Number(summary?.completedLessons);
+    return total + (Number.isFinite(completed) && completed > 0 ? completed : 0);
+  }, 0);
+  const totalLessons = COURSES.reduce((total, course, index) => {
+    return total + (summaries[index]?.totalLessons || course.totalLessons);
+  }, 0);
+
+  return totalLessons > 0
+    ? Math.round((completedLessons / totalLessons) * 100)
+    : 0;
+};
+
 /**
  * Dashboard main component rendering application views and navigation layout.
  * @param {Object} props - Component properties.
@@ -83,17 +146,17 @@ function Dashboard({ setUser, darkMode, setDarkMode }) {
 
             <div className="cards">
               <div className="card">
-                <h2>07h</h2>
+                <h2>{getStudyTime()}</h2>
                 <span>Study</span>
               </div>
 
               <div className="card">
-                <h2>75%</h2>
+                <h2>{getCourseProgressPercent()}%</h2>
                 <span>Progress</span>
               </div>
 
               <div className="card">
-                <h2>10 / 15</h2>
+                <h2>{DASHBOARD_FALLBACKS.mocks}</h2>
                 <span>Mocks</span>
               </div>
             </div>
