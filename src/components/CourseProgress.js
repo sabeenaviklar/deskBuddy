@@ -114,7 +114,8 @@ function CourseProgress({ course, goBack }) {
       </div>
 
       {/* TABLE */}
-      <table className="progress-table">
+      <div className="progress-table-wrapper">
+  <table className="progress-table">
         <thead>
           <tr>
             <th>Task</th>
@@ -154,7 +155,8 @@ function CourseProgress({ course, goBack }) {
             </tr>
           )}
         </tbody>
-      </table>
+        </table>
+</div>
     </div>
   );
 }
