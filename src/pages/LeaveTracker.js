@@ -248,18 +248,20 @@ function LeaveTracker() {
       {/* MODAL */}
       {selectedDate && (
         <div className="leave-modal">
-          <h4>Add Leave</h4>
-          <p>{selectedDate}</p>
+          <div className="leave-dialog">
+            <h4>Add Leave</h4>
+            <p>{selectedDate}</p>
 
-          <input
-            placeholder="Reason"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
+            <input
+              placeholder="Reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+            />
 
-          <div className="modal-actions">
-            <button onClick={addLeave}>Save</button>
-            <button onClick={() => setSelectedDate(null)}>Cancel</button>
+            <div className="modal-actions">
+              <button onClick={addLeave}>Save</button>
+              <button onClick={() => setSelectedDate(null)}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
