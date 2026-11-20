@@ -281,6 +281,7 @@ textarea::placeholder {
 
 /* ======================
    SWITCH ROW
+   ====================== */
 .switch-row {
   margin-top: 50px;
   display: flex;
@@ -306,6 +307,7 @@ textarea::placeholder {
 
 /* ======================
    RIGHT PANEL (SOLID)
+   ====================== */
 .auth-right {
   width: 60%;
   background: #0C2C55; /* ⭐ MAIN COLOR */
@@ -1971,6 +1973,8 @@ body.dark .day:hover {
     padding: 10px;
     white-space: nowrap;
   }
+}
+
 .auth-wrapper {
   position: relative;
 }
@@ -1998,6 +2002,7 @@ body.dark .switch-row {
 
 /* ======================
    STUDY SCHEDULE
+   ====================== */
 
 .schedule-container {
   max-width: 1100px;
