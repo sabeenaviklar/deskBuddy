@@ -261,6 +261,7 @@ textarea::placeholder {
 
 /* ======================
    PRIMARY BUTTON (SOLID)
+   ====================== */
 .primary-btn {
   background: #629FAD; /* ⭐ MAIN COLOR */
   border: none;
