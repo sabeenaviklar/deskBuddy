@@ -1,180 +1,3 @@
-
-//pages/LeaveTracker.js
-// import { useState } from "react";
-
-// function LeaveTracker() {
-//   const [leaves, setLeaves] = useState(
-//     Number(localStorage.getItem("leaves")) || 0
-//   );
-
-//   const apply = () => {
-//     const l = leaves + 1;
-//     setLeaves(l);
-//     localStorage.setItem("leaves", l);
-//   };
-
-//   return (
-//     <div className="panel">
-//       <h2>Leave Tracker</h2>
-//       <p>Leaves taken: {leaves}</p>
-//       <button onClick={apply}>Apply Leave</button>
-//     </div>
-//   );
-// }
-
-// export default LeaveTracker;
-
-// //pages/LeaveTracker.js
-// import { useState, useEffect } from "react";
-
-// function LeaveTracker() {
-//   const [workingDays, setWorkingDays] = useState(
-//     Number(localStorage.getItem("workingDays")) || 200
-//   );
-
-//   const [leaves, setLeaves] = useState(
-//     JSON.parse(localStorage.getItem("leaveData")) || []
-//   );
-
-//   const [selectedDate, setSelectedDate] = useState(null);
-//   const [reason, setReason] = useState("");
-
-//   useEffect(() => {
-//     localStorage.setItem("leaveData", JSON.stringify(leaves));
-//     localStorage.setItem("workingDays", workingDays);
-//   }, [leaves, workingDays]);
-
-//   const addLeave = () => {
-//     if (!reason) return alert("Please enter reason");
-
-//     setLeaves([...leaves, { date: selectedDate, reason }]);
-//     setSelectedDate(null);
-//     setReason("");
-//   };
-
-//   const leaveCount = leaves.length;
-//   const presentDays = Math.max(workingDays - leaveCount, 0);
-
-//   const leavePercent = workingDays
-//     ? Math.round((leaveCount / workingDays) * 100)
-//     : 0;
-
-//   return (
-//     <div className="panel">
-//       <h2>Leave Tracker</h2>
-
-//       {/* WORKING DAYS INPUT */}
-//       <div style={{ marginBottom: 20 }}>
-//         <label>Total Working Days</label>
-//         <input
-//           type="number"
-//           value={workingDays}
-//           onChange={(e) => setWorkingDays(Number(e.target.value))}
-//           style={{ marginLeft: 10, width: 80 }}
-//         />
-//       </div>
-
-//       {/* DONUT */}
-//       <DonutChart percent={leavePercent} />
-
-//       <p>
-//         Leaves Taken: <b>{leaveCount}</b> / {workingDays}
-//       </p>
-
-//       {/* CALENDAR */}
-//       <Calendar
-//         leaves={leaves}
-//         onSelectDate={(d) => setSelectedDate(d)}
-//       />
-
-//       {/* ADD LEAVE MODAL */}
-//       {selectedDate && (
-//         <div className="leave-modal">
-//           <h4>Add Leave</h4>
-//           <p>{selectedDate}</p>
-//           <input
-//             placeholder="Reason"
-//             value={reason}
-//             onChange={(e) => setReason(e.target.value)}
-//           />
-//           <button onClick={addLeave}>Save</button>
-//           <button onClick={() => setSelectedDate(null)}>Cancel</button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default LeaveTracker;
-
-// function Calendar({ leaves, onSelectDate }) {
-//     const today = new Date();
-//     const year = today.getFullYear();
-//     const month = today.getMonth();
-  
-//     const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
-//     const leaveDates = leaves.map((l) => l.date);
-  
-//     return (
-//       <div className="calendar">
-//         {[...Array(daysInMonth)].map((_, i) => {
-//           const date = `${year}-${month + 1}-${i + 1}`;
-//           const isLeave = leaveDates.includes(date);
-  
-//           return (
-//             <div
-//               key={i}
-//               className={`day ${isLeave ? "leave" : ""}`}
-//               onClick={() => onSelectDate(date)}
-//             >
-//               {i + 1}
-//             </div>
-//           );
-//         })}
-//       </div>
-//     );
-//   }
-
-//   function DonutChart({ percent }) {
-//     return (
-//       <div className="donut">
-//         <svg width="160" height="160">
-//           <circle
-//             cx="80"
-//             cy="80"
-//             r="60"
-//             stroke="#e5e7eb"
-//             strokeWidth="14"
-//             fill="none"
-//           />
-//           <circle
-//             cx="80"
-//             cy="80"
-//             r="60"
-//             stroke="#ef4444"
-//             strokeWidth="14"
-//             fill="none"
-//             strokeDasharray={`${percent * 3.77} 999`}
-//             transform="rotate(-90 80 80)"
-//           />
-//           <text
-//             x="50%"
-//             y="50%"
-//             textAnchor="middle"
-//             dy="8"
-//             fontSize="22"
-//             fontWeight="700"
-//           >
-//             {percent}%
-//           </text>
-//         </svg>
-//         <p>Leave %</p>
-//       </div>
-//     );
-//   }
-  
-  
 import { useState, useEffect } from "react";
 
 /* ======================
@@ -187,9 +10,13 @@ function LeaveTracker() {
     Number(localStorage.getItem("workingDays")) || 200
   );
 
-  const [leaves, setLeaves] = useState(
-    JSON.parse(localStorage.getItem("leaveData")) || []
-  );
+  const [leaves, setLeaves] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("leaveData")) || [];
+    } catch {
+      return [];
+    }
+  });
 
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
@@ -203,9 +30,15 @@ function LeaveTracker() {
   }, [leaves, workingDays]);
 
   const addLeave = () => {
-    if (!reason) return alert("Please enter reason");
+    if (!reason.trim()) return alert("Please enter reason");
 
-    setLeaves([...leaves, { date: selectedDate, reason }]);
+    setLeaves([...leaves, { date: selectedDate, reason: reason.trim() }]);
+    setSelectedDate(null);
+    setReason("");
+  };
+
+  const removeLeave = (dateToRemove) => {
+    setLeaves(leaves.filter((l) => l.date !== dateToRemove));
     setSelectedDate(null);
     setReason("");
   };
@@ -214,6 +47,8 @@ function LeaveTracker() {
   const leavePercent = workingDays
     ? Math.round((leaveCount / workingDays) * 100)
     : 0;
+
+  const existingLeave = selectedDate ? leaves.find((l) => l.date === selectedDate) : null;
 
   return (
     <div className="panel">
@@ -225,7 +60,7 @@ function LeaveTracker() {
         <input
           type="number"
           value={workingDays}
-          onChange={(e) => setWorkingDays(Number(e.target.value))}
+          onChange={(e) => setWorkingDays(Math.max(1, Number(e.target.value)))}
         />
       </div>
 
@@ -248,19 +83,45 @@ function LeaveTracker() {
       {/* MODAL */}
       {selectedDate && (
         <div className="leave-modal">
-          <h4>Add Leave</h4>
-          <p>{selectedDate}</p>
+          {existingLeave ? (
+            <>
+              <h4>Leave Details</h4>
+              <p><strong>Date:</strong> {selectedDate}</p>
+              <p><strong>Reason:</strong> {existingLeave.reason}</p>
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  style={{ background: "#ef4444", color: "#fff" }}
+                  onClick={() => removeLeave(selectedDate)}
+                >
+                  Remove Leave
+                </button>
+                <button type="button" onClick={() => setSelectedDate(null)}>
+                  Close
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h4>Add Leave</h4>
+              <p>{selectedDate}</p>
 
-          <input
-            placeholder="Reason"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
+              <input
+                placeholder="Reason (e.g., Sick, Personal, Family Event)"
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+              />
 
-          <div className="modal-actions">
-            <button onClick={addLeave}>Save</button>
-            <button onClick={() => setSelectedDate(null)}>Cancel</button>
-          </div>
+              <div className="modal-actions">
+                <button type="button" onClick={addLeave}>
+                  Save
+                </button>
+                <button type="button" onClick={() => setSelectedDate(null)}>
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -296,14 +157,14 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
     <div className="calendar-wrapper">
       {/* HEADER */}
       <div className="calendar-header">
-        <button onClick={prevMonth}>◀</button>
+        <button type="button" onClick={prevMonth}>◀</button>
         <h4>
           {new Date(year, month).toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </h4>
-        <button onClick={nextMonth}>▶</button>
+        <button type="button" onClick={nextMonth}>▶</button>
       </div>
 
       {/* DAYS */}
@@ -317,7 +178,7 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
         ))}
 
         {[...Array(daysInMonth)].map((_, i) => {
-          const dateStr = `${year}-${month + 1}-${i + 1}`;
+          const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(i + 1).padStart(2, "0")}`;
           const isLeave = leaveDates.includes(dateStr);
 
           return (
@@ -325,6 +186,7 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
               key={i}
               className={`day ${isLeave ? "leave" : ""}`}
               onClick={() => onSelectDate(dateStr)}
+              title={isLeave ? "Click to view or remove leave" : "Click to mark leave"}
             >
               {i + 1}
             </div>
@@ -339,7 +201,8 @@ function Calendar({ month, year, setMonth, setYear, leaves, onSelectDate }) {
    DONUT CHART
 ====================== */
 function DonutChart({ percent }) {
-  const dash = percent * 3.77;
+  const safePercent = Math.min(100, Math.max(0, percent));
+  const dash = safePercent * 3.77;
 
   return (
     <div className="donut">
@@ -370,11 +233,10 @@ function DonutChart({ percent }) {
           fontSize="22"
           fontWeight="700"
         >
-          {percent}%
+          {safePercent}%
         </text>
       </svg>
       <p>Leave %</p>
     </div>
   );
 }
-

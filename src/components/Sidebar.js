@@ -1,20 +1,3 @@
-// function Navbar({ setSection, logout }) {
-//     return (
-//       <div className="navbar">
-//         <h3>Desk Buddy</h3>
-//         <div>
-//           <button onClick={() => setSection("dashboard")}>Dashboard</button>
-//           <button onClick={() => setSection("time")}>Time</button>
-//           <button onClick={() => setSection("leave")}>Leave</button>
-//           <button onClick={logout}>Logout</button>
-//         </div>
-//       </div>
-//     );
-//   }
-  
-//   export default Navbar;
-
-//pages/Sidebar.js
 /**
  * Sidebar navigation component providing access to views and logout.
  * @param {Object} props - Component properties.
@@ -29,43 +12,49 @@ function Sidebar({ setView, currentView, logout }) {
       <h2>🎓 Desk Buddy</h2>
 
       <button
+        type="button"
         className={currentView === "dashboard" ? "active" : ""}
         onClick={() => setView("dashboard")}
       >
         Dashboard
       </button>
       <button
+        type="button"
         className={currentView === "schedule" ? "active" : ""}
         onClick={() => setView("schedule")}
       >
         Study Schedule
       </button>
       <button
+        type="button"
         className={currentView === "time" ? "active" : ""}
         onClick={() => setView("time")}
       >
         Time Tracker
       </button>
       <button
+        type="button"
         className={currentView === "todo" ? "active" : ""}
         onClick={() => setView("todo")}
       >
         To Do
       </button>
       <button
+        type="button"
         className={currentView === "leave" ? "active" : ""}
         onClick={() => setView("leave")}
       >
         Leave Tracker
       </button>
       <button
+        type="button"
         className={currentView === "Contact" ? "active" : ""}
         onClick={() => setView("Contact")}
       >
         Contact
       </button>
 
-      <button className="logout" onClick={logout}>
+      <button type="button" className="logout" onClick={logout}>
         Logout
       </button>
     </aside>
@@ -73,5 +62,3 @@ function Sidebar({ setView, currentView, logout }) {
 }
 
 export default Sidebar;
-
-  
