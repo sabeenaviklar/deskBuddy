@@ -1,7 +1,7 @@
 import { useState } from "react";
 import loginImg from "./login.png";
 
-function Login({ setPage, setUser }) {
+function Login({ setPage, setUser, darkMode, setDarkMode }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,6 +34,13 @@ function Login({ setPage, setUser }) {
 
   return (
     <div className="auth-wrapper">
+      <button
+        type="button"
+        className="theme-toggle auth-theme-toggle"
+        onClick={() => setDarkMode((current) => !current)}
+      >
+        {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      </button>
       <div className="auth-left">
         <h2>Login</h2>
         <p className="subtitle">Enter your account details</p>
