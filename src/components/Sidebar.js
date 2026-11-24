@@ -30,36 +30,42 @@ function Sidebar({ setView, currentView, logout }) {
 
       <button
         className={currentView === "dashboard" ? "active" : ""}
+        aria-current={currentView === "dashboard" ? "page" : undefined}
         onClick={() => setView("dashboard")}
       >
         Dashboard
       </button>
       <button
         className={currentView === "schedule" ? "active" : ""}
+        aria-current={currentView === "schedule" ? "page" : undefined}
         onClick={() => setView("schedule")}
       >
         Study Schedule
       </button>
       <button
         className={currentView === "time" ? "active" : ""}
+        aria-current={currentView === "time" ? "page" : undefined}
         onClick={() => setView("time")}
       >
         Time Tracker
       </button>
       <button
         className={currentView === "todo" ? "active" : ""}
+        aria-current={currentView === "todo" ? "page" : undefined}
         onClick={() => setView("todo")}
       >
         To Do
       </button>
       <button
         className={currentView === "leave" ? "active" : ""}
+        aria-current={currentView === "leave" ? "page" : undefined}
         onClick={() => setView("leave")}
       >
         Leave Tracker
       </button>
       <button
         className={currentView === "Contact" ? "active" : ""}
+        aria-current={currentView === "Contact" ? "page" : undefined}
         onClick={() => setView("Contact")}
       >
         Contact
