@@ -115,7 +115,10 @@ textarea::placeholder {
 .sidebar button:hover {
   background: rgba(255,255,255,0.15);
 }
-
+.sidebar button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
 .sidebar button.active {
   background: var(--primary);
 }
